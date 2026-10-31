@@ -144,8 +144,15 @@
   .entry > a { display: inline-block; margin-top: 8px; }
   .entry-links { display: flex; flex-wrap: wrap; gap: 6px 20px; margin-top: 8px; }
   /* Sports photos: small thumbnails in a row */
-  .pics { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; margin-bottom: 12px; }
-  .pics img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 6px; }
+  .pics { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+  .pics img { display: block; width: 150px; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 6px; }
+  .entry p + p { margin-top: 0.6em; }
+  .bullets { margin: 6px 0 0 1.2em; }
+  .bullets li + li { margin-top: 2px; }
+  @media (max-width: 720px) {
+    .pics img { width: calc(50% - 4px); max-width: 150px; }
+    .tab { padding: 7px 12px; font-size: 12px; }
+  }
   .pics img.missing { display: none; } /* photos you haven't uploaded yet stay hidden */
   /* Socials: a quieter row at the very bottom */
   .socials { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px 20px; margin-top: 36px; padding-top: 18px; border-top: 1px solid rgba(31, 36, 32, 0.25); font-family: var(--mono); font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; }
@@ -210,7 +217,6 @@
     <section class="section card" id="summit" data-world="150">
       <div class="col hero">
         <div class="hero-text">
-          <span class="tag f">Hi, I'm</span>
           <h1 class="f">Tessa</h1>
           <p class="lede f">Welcome to my personal website. This is where I post my thoughts, projects, and anything I find interesting.</p>
           <p class="hint f">read more ↓</p>
@@ -221,7 +227,6 @@
 
     <section class="section card" id="about" data-world="215">
       <div class="col">
-        <span class="tag f"></span>
         <h2 class="f">Background</h2>
         <p class="f">I'm current studying business analytics and finance at the Schulich School of Business at York University, where I also play on the Varsity Field Hockey Team.</p>
         <p class="f">I grew up in Vancouver (where I took all these photos), moved to Toronto for sports and school, and am looking to work in San Francisco at startup!</p>
@@ -230,57 +235,59 @@
 
     <section class="section card end" id="trailhead" data-world="430">
       <div class="col">
-        <span class="tag"></span>
         <h2>About me</h2>
-        <div class="tabs" role="tablist" aria-label="My work">
-          <button class="tab" role="tab" id="tab-writing" aria-controls="panel-writing" aria-selected="true">Writing</button>
-          <button class="tab" role="tab" id="tab-projects" aria-controls="panel-projects" aria-selected="false" tabindex="-1">Projects</button>
+        <div class="tabs" role="tablist" aria-label="More about me">
+          <button class="tab" role="tab" id="tab-projects" aria-controls="panel-projects" aria-selected="true">Projects</button>
           <button class="tab" role="tab" id="tab-research" aria-controls="panel-research" aria-selected="false" tabindex="-1">Research</button>
+          <button class="tab" role="tab" id="tab-writing" aria-controls="panel-writing" aria-selected="false" tabindex="-1">Writing</button>
+          <button class="tab" role="tab" id="tab-community" aria-controls="panel-community" aria-selected="false" tabindex="-1">Community</button>
           <button class="tab" role="tab" id="tab-sports" aria-controls="panel-sports" aria-selected="false" tabindex="-1">Sports</button>
         </div>
         <!--
-          Each entry is just a line of text and a link.
-          To link somewhere, change href="#" to the address. Sports photos: upload a photo to GitHub and
-          put its file name in src="…" (e.g. src="hockey-team.jpg"). Delete an <img …> line to drop a photo.
+          Each entry is a line or two of text and a link.
+          To link somewhere, change href="#" to the address.
+          Photos: upload the photo to GitHub, then put its file name in src="…". Delete an <img …> to drop a photo.
         -->
-        <div class="panel" id="panel-writing" role="tabpanel" aria-labelledby="tab-writing">
+        <div class="panel" id="panel-projects" role="tabpanel" aria-labelledby="tab-projects">
           <ul class="entries">
-            <li class="entry"><p>I enjoy learning and writing about business, technology, psychology, and other topics. Right now, I'm very interested in learning about the conduit financing happening between the neoclouds and frontier labs, and its long-term effects on the broader economy.</p><a href="#">Tessa's substack ↗</a></li>
-            
-            
-            
+            <li class="entry"><p><b>Loan Review Agent:</b> an AI agent I built in Python for the asset management team at ACM Advisors. It writes loan performance commentary across a $5.5B AUM commercial real estate portfolio, saving analysts 100+ hours per review cycle.</p><a href="#">View project ↗</a></li>
           </ul>
         </div>
-        <div class="panel" id="panel-projects" role="tabpanel" aria-labelledby="tab-projects" hidden="">
+        <div class="panel" id="panel-research" role="tabpanel" aria-labelledby="tab-research" hidden>
           <ul class="entries">
-            <li class="entry"><p><b>Loan Review Agent:</b> I built in Python for the asset management team I worked with over the summer. It writes commentary on loan performance.</p><a href="#">View project ↗</a></li>
-            
+            <li class="entry"><p>I work with Professor Andrew Maxwell at York's Lassonde School of Engineering on research around technology, innovation, and commercialization, published through the Innovation Doctor Substack.</p><p>I'm also helping turn an Innovation &amp; Creativity course into an online format for an AI learning platform.</p><a href="#">Innovation Doctor Substack ↗</a></li>
           </ul>
         </div>
-        <div class="panel" id="panel-research" role="tabpanel" aria-labelledby="tab-research" hidden="">
+        <div class="panel" id="panel-writing" role="tabpanel" aria-labelledby="tab-writing" hidden>
           <ul class="entries">
-            <li class="entry"><p>I work with Professor Andrew Maxwell on research around technology, innovation, and commericalization through the Innovator doctor substack</p><a href="#">Innovator doctor Substack</a></li>
-            
+            <li class="entry"><p>I enjoy learning and writing about business, technology, psychology, and other topics.</p><p>Right now, I'm very interested in learning about the conduit financing happening between the neoclouds and frontier labs, and its long-term effects on the broader economy.</p><a href="#">Tessa's Substack ↗</a></li>
           </ul>
         </div>
-        <div class="panel" id="panel-sports" role="tabpanel" aria-labelledby="tab-sports" hidden="">
+        <div class="panel" id="panel-community" role="tabpanel" aria-labelledby="tab-community" hidden>
           <ul class="entries">
             <li class="entry">
-              <div class="pics"><img src="hockey-1.jpg" alt="" class="missing"><img src="hockey-2.jpg" alt="" class="missing"></div>
-              <p>Varsity Field Hockey at York University. U SPORTS champions, 2025.</p>
-              <div class="entry-links"><a href="#">Team page ↗</a><a href="#">Highlights ↗</a></div>
+              <div class="pics"><img src="hopon-bikes.webp" alt="The girls' mountain biking group lined up with their bikes"></div>
+              <p><b>HopOn North Vancouver:</b> co-launched an after-school mountain biking program for girls with Cycling BC, focused on confidence, resilience, and being a good teammate.</p>
+              <div class="entry-links"><a href="#">Read the recap ↗</a></div>
+            </li>
+            <li class="entry"><p><b>Bags of Promise, Vice President:</b> I lead fundraising for youth experiencing homelessness and run the club's operations and volunteers.</p></li>
+            <li class="entry"><p><b>Sport Council at York:</b> I coordinate Varsity Athletics events and mentor first-year student-athletes through weekly meetings.</p></li>
+          </ul>
+        </div>
+        <div class="panel" id="panel-sports" role="tabpanel" aria-labelledby="tab-sports" hidden>
+          <ul class="entries">
+            <li class="entry">
+              <div class="pics"><img src="hockey-game.webp" alt="Tessa playing field hockey for York"><img src="hockey-champions.webp" alt="York field hockey team, 2025 U SPORTS champions"></div>
+              <p><b>York University Varsity Field Hockey</b></p>
+              <ul class="bullets">
+                <li>U SPORTS (Gold, Silver) and OUA (Gold, Silver, Bronze) medalist</li>
+                <li>Canadian U18 National Team member</li>
+              </ul>
             </li>
             <li class="entry">
-              <div class="pics"><img src="bike-1.jpg" alt="" class="missing"><img src="bike-2.jpg" alt="" class="missing"></div>
-              <p>Started a club to get more girls into mountain biking.</p>
-              <div class="entry-links"><a href="#">Club page ↗</a></div>
+              <div class="pics"><img src="ski-sunset.webp" alt="Sunset over the ski hill"></div>
+              <p><b>Alpine skiing:</b> ski raced for 10 years, did freestyle (where I learned to backflip), and coached for a couple of years.</p>
             </li>
-            <li class="entry">
-              <div class="pics"><img src="ski-1.jpg" alt="" class="missing"><img src="ski-2.jpg" alt="" class="missing"></div>
-              <p>Ski raced for 10 years, did freestyle (where I learned to backflip), and coached for a couple of years.</p>
-              <div class="entry-links"><a href="#">Link ↗</a></div>
-            </li>
-            
           </ul>
         </div>
         <div class="socials">

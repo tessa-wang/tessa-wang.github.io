@@ -11,7 +11,7 @@
 
   var EDITABLE = [
     'main .tag', 'main h1', 'main h2', 'main h3', 'main p', 'main .meta span',
-    'main .entry a', 'main .entry-links a', 'main .socials a', 'main .socials-label', 'main .contact a', '#links a'
+    'main .entry a', 'main .entry-links a', 'main .bullets li', 'main .socials a', 'main .socials-label', 'main .contact a', '#links a'
   ].join(',');
 
   // ---------- Styles for the editing tools ----------
