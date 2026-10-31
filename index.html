@@ -12,7 +12,7 @@
   :root {
     --cream: #fbf6ea;
     --ink: #1f2420;
-    --tag: #f6c33b;
+    --tag: #3d5a40;
     --wood: #9a5f35;
     --wood-dark: #6e4022;
     --serif: "Newsreader", Georgia, serif;
@@ -94,7 +94,7 @@
   .tag { text-shadow: none; }
 
   .tag {
-    display: inline-block; background: var(--tag); color: var(--ink);
+        display: inline-block; background: var(--tag); color: var(--cream);
     font-family: var(--mono); font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase;
     padding: 6px 14px; transform: rotate(-1.5deg); margin-bottom: 28px;
     box-shadow: 0 2px 0 rgba(0, 0, 0, 0.08);
@@ -137,7 +137,7 @@
     padding: 8px 16px; border-radius: 999px; cursor: pointer; transition: background 0.2s, border-color 0.2s;
   }
   .tab:hover { border-color: var(--ink); }
-  .tab[aria-selected="true"] { background: var(--tag); border-color: var(--tag); }
+  .tab[aria-selected="true"] { background: var(--tag); border-color: var(--tag); color: var(--cream); }
   .tab:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
   .panel .entries { margin-top: 24px; }
   /* Socials: a quieter row at the very bottom */
