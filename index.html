@@ -73,6 +73,9 @@
   .hud { position: fixed; z-index: 10; font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink); transition: color 0.6s; }
   body.hud-light .hud { color: var(--cream); }
   #brand { top: 24px; left: clamp(16px, 3vw, 36px); text-decoration: none; font-family: var(--serif); font-size: 22px; letter-spacing: 0; text-transform: none; }
+  #links { top: 31px; right: clamp(16px, 3vw, 36px); display: flex; gap: 10px; }
+  #links a { text-decoration: none; }
+  #links a:hover { text-decoration: underline; }
   #elev {
     left: clamp(16px, 3vw, 36px); top: 50%; transform: translateY(-50%); line-height: 1.6;
     background: rgba(244, 241, 232, 0.78); padding: 10px 14px; border-radius: 8px;
@@ -193,6 +196,11 @@
   <div id="halftone" aria-hidden="true"></div>
 
   <a id="brand" class="hud" href="#summit">Tessa</a>
+    <nav id="links" class="hud" aria-label="Contact">
+    <a href="mailto:tessa@wangs.net">Email</a><span>·</span>
+    <a href="https://www.linkedin.com/in/tessa-wang/" target="_blank" rel="noopener">LinkedIn</a><span>·</span>
+    <a href="https://github.com/tessa-wang/" target="_blank" rel="noopener">GitHub</a>
+  </nav>
   <div id="elev" class="hud" aria-hidden="true">
     <div class="label">Elevation</div>
     <div class="n"><span id="elev-n">7,160</span> ft</div>
