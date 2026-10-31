@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tessa</title>
+<meta name="description" content="Tessa: from the peaks to the trailhead.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Inter:wght@400;500&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #fbf6ea;
+    --ink: #1f2420;
+    --tag: #f6c33b;
+    --wood: #9a5f35;
+    --wood-dark: #6e4022;
+    --serif: "Newsreader", Georgia, serif;
+    --mono: "IBM Plex Mono", ui-monospace, monospace;
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #1d261c;
+    color: var(--ink);
+    font-family: Inter, system-ui, sans-serif;
+    font-size: 18px;
+    line-height: 1.7;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+
+  /* ---------- The scenery: one tall "world" the camera descends through ---------- */
+  #scene { position: fixed; inset: 0; overflow: hidden; z-index: 0; }
+  #world {
+    position: absolute; left: 0; top: 0; width: 100%; height: 740vh; will-change: transform;
+    background: linear-gradient(to bottom,
+      #6f88a3 0vh, #ecd3a6 120vh, #efe9e6 205vh, #e4e6ea 300vh, #d8dbd6 380vh,
+      #7d8c76 450vh, #3a4a39 520vh, #1d261c 740vh);
+  }
+  .layer { position: absolute; left: 0; width: 100%; }
+  .layer img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .fade-top img { -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 16%); mask-image: linear-gradient(to bottom, transparent 0, #000 16%); }
+  .fade-top.soft img { -webkit-mask-image: linear-gradient(to bottom, transparent 0, rgba(0,0,0,0.5) 14%, #000 32%); mask-image: linear-gradient(to bottom, transparent 0, rgba(0,0,0,0.5) 14%, #000 32%); }
+  .fade-both img { -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 30%, #000 65%, transparent 100%); mask-image: linear-gradient(to bottom, transparent 0, #000 30%, #000 65%, transparent 100%); }
+  .fade-bottom img { -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent 100%); mask-image: linear-gradient(to bottom, #000 70%, transparent 100%); }
+  /* Cut-out layers (sky removed): always melt away at the bottom, however the photo is cropped */
+  .cut img { -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent 98%); mask-image: linear-gradient(to bottom, #000 55%, transparent 98%); }
+
+  /* Halftone print texture over the scenery */
+  #halftone {
+    position: fixed; inset: 0; z-index: 1; pointer-events: none;
+    background-image: radial-gradient(rgba(25, 20, 10, 0.5) 0.8px, transparent 1.3px);
+    background-size: 4px 4px;
+    opacity: 0.22;
+  }
+
+  /* ---------- Fixed UI ---------- */
+  #loader {
+    position: fixed; inset: 0; z-index: 50; display: grid; place-items: center;
+    background: #6f88a3; color: var(--cream);
+    font-family: var(--mono); font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase;
+    transition: opacity 1s var(--ease), visibility 1s;
+  }
+  body.loaded #loader { opacity: 0; visibility: hidden; }
+
+  .hud { position: fixed; z-index: 10; font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink); transition: color 0.6s; }
+  body.hud-light .hud { color: var(--cream); }
+  #brand { top: 24px; left: clamp(16px, 3vw, 36px); text-decoration: none; font-family: var(--serif); font-size: 22px; letter-spacing: 0; text-transform: none; }
+  #elev { left: clamp(16px, 3vw, 36px); top: 50%; transform: translateY(-50%); line-height: 1.6; }
+  #elev .label { opacity: 0.65; }
+  #elev .n { font-size: 14px; }
+
+  /* ---------- Content column ---------- */
+  main { position: relative; z-index: 2; }
+  .section { position: relative; min-height: 100vh; padding: 22vh 20px; display: flex; flex-direction: column; justify-content: center; }
+  .col { position: relative; width: 100%; max-width: 680px; margin: 0 auto; }
+  /* Soft shadows keep text readable over any photo */
+  .col { text-shadow: 0 0 10px rgba(251, 246, 234, 0.85); }
+  .f { transition: opacity 0.25s linear; }
+  .ink-light { color: var(--cream); }
+  .ink-light .col { text-shadow: 0 1px 2px rgba(10, 14, 10, 0.6), 0 0 16px rgba(10, 14, 10, 0.75); }
+  .tag, .sign { text-shadow: none; }
+
+  .tag {
+    display: inline-block; background: var(--tag); color: var(--ink);
+    font-family: var(--mono); font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 6px 14px; transform: rotate(-1.5deg); margin-bottom: 28px;
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.08);
+  }
+  h1, h2, h3 { font-family: var(--serif); font-weight: 500; letter-spacing: -0.015em; line-height: 1.1; }
+  h1 { font-size: clamp(72px, 14vw, 180px); line-height: 0.95; letter-spacing: -0.03em; }
+  h2 { font-size: clamp(36px, 5vw, 56px); margin-bottom: 28px; }
+  h3 { font-size: 26px; }
+  .col p + p { margin-top: 1.1em; }
+  .lede { font-size: clamp(20px, 2.2vw, 24px); margin-top: 24px; }
+  .hint { margin-top: 48px; font-family: var(--mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.75; }
+  .placeholder { opacity: 0.7; font-style: italic; }
+
+  .entries { list-style: none; margin-top: 36px; display: grid; gap: 28px; }
+  .entry { border-top: 1px solid currentColor; padding-top: 18px; border-color: rgba(31, 36, 32, 0.25); }
+  .ink-light .entry { border-color: rgba(251, 246, 234, 0.3); }
+  .entry .meta { font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.75; display: flex; justify-content: space-between; gap: 16px; margin-bottom: 6px; }
+  .entry p { margin-top: 6px; }
+  .entry a { font-family: var(--mono); font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; }
+
+  /* ---------- Trailhead: carved trail-sign buttons ---------- */
+  /* Final content: a box over the tree stump in the trail photo */
+  .trailhead { justify-content: center; padding-top: 8vh; padding-bottom: 6vh; min-height: 100vh; }
+  .trailhead .col {
+    max-width: 620px; min-height: 82vh; padding: 40px 40px 36px; border-radius: 8px;
+    display: flex; flex-direction: column; justify-content: center;
+    background: rgba(20, 28, 20, 0.8); box-shadow: 0 20px 50px -20px rgba(0, 0, 0, 0.55);
+    text-shadow: none;
+  }
+  body { position: relative; }
+  footer { position: absolute; left: 0; right: 0; bottom: 0; z-index: 3; }
+  .trailhead .col { text-shadow: none; }
+  .contact { display: flex; flex-wrap: wrap; gap: 12px 24px; margin-top: 8px; font-family: var(--mono); font-size: 14px; letter-spacing: 0.06em; text-transform: uppercase; }
+  .contact a { text-decoration: none; border-bottom: 1px solid var(--tag); padding-bottom: 2px; }
+  .contact a:hover { color: var(--tag); }
+  .signs { display: flex; flex-wrap: wrap; gap: 14px 12px; margin-top: 40px; }
+  .sign {
+    position: relative; border: 0; cursor: pointer;
+    font-family: var(--serif); font-size: 20px; color: #3a2210;
+    padding: 10px 34px 10px 18px;
+    background:
+      repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.05) 0 2px, transparent 2px 9px),
+      linear-gradient(to bottom, #c18454, var(--wood) 55%, var(--wood-dark));
+    clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 50%, calc(100% - 18px) 100%, 0 100%);
+    text-shadow: 0 1px 0 rgba(255, 220, 180, 0.45);
+    transition: transform 0.4s var(--ease), filter 0.3s;
+  }
+  .sign:nth-child(odd) { transform: rotate(-1.2deg); }
+  .sign:nth-child(even) { transform: rotate(1deg); }
+  .sign:hover, .sign:focus-visible { transform: translateY(-3px) rotate(0); filter: brightness(1.12); outline: none; }
+  .sign .arrow { font-family: var(--mono); font-size: 14px; margin-right: 8px; }
+  footer { position: relative; z-index: 2; padding: 0 20px 28px; text-align: center; color: var(--cream); font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.7; }
+
+  @media (max-width: 720px) {
+    body { font-size: 17px; }
+    #elev { top: auto; bottom: 20px; transform: none; }
+    #elev .label { display: none; }
+    .section { padding: 18vh 22px; }
+    #trail-img { object-position: 88% 70% !important; } /* keep the path in view */
+    .trailhead .col { width: auto; min-height: 0; padding: 26px 22px; border-radius: 6px; }
+    footer { padding-bottom: 56px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { transition-duration: 0.01ms !important; }
+  }
+</style>
+</head>
+<body>
+  <div id="loader">Ascending to 7,160 ft…</div>
+  <script>setTimeout(function () { document.body.classList.add('loaded'); }, 5000);</script>
+
+  <!--
+    SWAPPING PHOTOS: replace a file in photos/ with a new one of the same name and refresh.
+      Full photos (any photo works):  sky, snow-valley, mist, tall-trees, mossy-trail
+      Cut-outs (sky must be removed, saved as a transparent .webp or .png):  peaks, snowy-firs, green-mountain
+    To reframe a photo, change its object-position (e.g. "50% 10%" = centered, near the top).
+    Scenery layers: top/height are in vh; data-speed > 1 = closer to the camera (moves faster).
+  -->
+  <div id="scene" aria-hidden="true">
+    <div id="world">
+      <!-- Above the clouds: golden sky, snowy peaks; snowy firs stand in front of the cloudy valley -->
+      <div class="layer fade-bottom" data-speed="0.85" style="top:0;height:125vh"><img src="photos/sky.webp" alt="" style="object-position:50% 75%"></div>
+      <div class="layer cut" data-speed="1" style="top:105vh;height:125vh"><img src="photos/peaks.webp" alt="" style="object-position:50% 0"></div>
+      <div class="layer fade-both" data-speed="0.95" style="top:205vh;height:150vh"><img src="photos/snow-valley.webp" alt="" style="object-position:60% 45%"></div>
+      <div class="layer cut" data-speed="1.12" style="top:180vh;height:125vh"><img src="photos/snowy-firs.webp" alt="" style="object-position:50% 0"></div>
+      <!-- Through the cloud: the snow ends; a green mountain waits underneath -->
+      <div class="layer cut" data-speed="1.05" style="top:338vh;height:125vh"><img src="photos/green-mountain.webp" alt="" loading="lazy" style="object-position:50% 30%"></div>
+      <div class="layer fade-both" data-speed="1.25" style="top:300vh;height:130vh;opacity:0.5"><img src="photos/mist.webp" alt="" loading="lazy"></div>
+      <div class="layer fade-both" data-speed="1.15" style="top:418vh;height:85vh;opacity:0.55"><img src="photos/mist.webp" alt="" loading="lazy" style="object-position:50% 60%"></div>
+      <!-- Into the forest -->
+      <!-- The end of the trail: tall trees, then the mossy path -->
+      <div class="layer fade-top" data-speed="1" style="top:448vh;height:165vh"><img src="photos/tall-trees.webp" alt="" loading="lazy" style="object-position:50% 45%"></div>
+      <div class="layer fade-top soft" data-speed="1" style="top:575vh;height:165vh"><img id="trail-img" src="photos/mossy-trail.webp" alt="" loading="lazy" style="object-position:50% 70%"></div>
+    </div>
+  </div>
+  <div id="halftone" aria-hidden="true"></div>
+
+  <a id="brand" class="hud" href="#summit">Tessa</a>
+  <div id="elev" class="hud" aria-hidden="true">
+    <div class="label">Elevation</div>
+    <div class="n"><span id="elev-n">7,160</span> ft</div>
+  </div>
+
+  <!--
+    EDITING: each section below is one stop on the way down.
+    - data-world: where in the scenery (vh from the top) the section sits.
+    - data-sign: the label on its trail-sign button at the trailhead (leave it off to skip a button).
+    - ink-light: use light text over dark scenery.
+  -->
+  <main>
+    <section class="section ink-light" id="summit" data-world="50" data-sign="Summit">
+      <div class="col">
+        <span class="tag f">7,160 ft / Whistler Peak</span>
+        <h1 class="f">Tessa</h1>
+        <p class="lede f placeholder">[One-line intro goes here.]</p>
+        <p class="hint f">Scroll to descend ↓</p>
+      </div>
+    </section>
+
+    <section class="section" id="about" data-world="165" data-sign="About">
+      <div class="col">
+        <span class="tag f">01 / About</span>
+        <h2 class="f">A little about me</h2>
+        <p class="f placeholder">[About me: a few sentences about who you are, where you're from and what you're studying or working on.]</p>
+        <p class="f placeholder">[A second paragraph: what you care about, what you love about the mountains, what you're looking for next.]</p>
+      </div>
+    </section>
+
+    <section class="section ink-light" id="sports" data-world="245" data-sign="Sports">
+      <div class="col">
+        <span class="tag f">02 / Sports</span>
+        <h2 class="f">On snow and on trail</h2>
+        <ul class="entries">
+          <li class="entry f"><div class="meta"><span>[Sport]</span><span>[Years]</span></div><h3>[e.g. Alpine ski racing]</h3><p class="placeholder">[Club, level, a highlight or result.]</p></li>
+          <li class="entry f"><div class="meta"><span>[Sport]</span><span>[Years]</span></div><h3>[e.g. Hiking the North Shore]</h3><p class="placeholder">[Favourite trails, a big objective, who you go with.]</p></li>
+          <li class="entry f"><div class="meta"><span>[Sport]</span><span>[Years]</span></div><h3>[Another sport]</h3><p class="placeholder">[A line or two.]</p></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section ink-light" id="projects" data-world="530" data-sign="Projects">
+      <div class="col">
+        <span class="tag f">03 / Projects</span>
+        <h2 class="f">Things I've built</h2>
+        <ul class="entries">
+          <li class="entry f"><div class="meta"><span>[Tech used]</span><span>[Year]</span></div><h3>[Project name]</h3><p class="placeholder">[One or two lines on what it does and why you made it.]</p><a href="#">View project ↗</a></li>
+          <li class="entry f"><div class="meta"><span>[Tech used]</span><span>[Year]</span></div><h3>[Project name]</h3><p class="placeholder">[One or two lines on what it does and why you made it.]</p><a href="#">View project ↗</a></li>
+          <li class="entry f"><div class="meta"><span>[Tech used]</span><span>[Year]</span></div><h3>[Project name]</h3><p class="placeholder">[One or two lines on what it does and why you made it.]</p><a href="#">View project ↗</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section ink-light" id="experience" data-world="625" data-sign="Experience">
+      <div class="col">
+        <span class="tag f">04 / Experience</span>
+        <h2 class="f">Where I've been</h2>
+        <ul class="entries">
+          <li class="entry f"><div class="meta"><span>[Organization]</span><span>[Start – End]</span></div><h3>[Role]</h3><p class="placeholder">[What you did and what you're proud of.]</p></li>
+          <li class="entry f"><div class="meta"><span>[Organization]</span><span>[Start – End]</span></div><h3>[Role]</h3><p class="placeholder">[What you did and what you're proud of.]</p></li>
+          <li class="entry f"><div class="meta"><span>[School]</span><span>[Years]</span></div><h3>[Program / degree]</h3><p class="placeholder">[Focus, awards, clubs.]</p></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section trailhead ink-light" id="trailhead">
+      <div class="col">
+        <span class="tag f">05 / Trailhead · 600 ft</span>
+        <h2 class="f">You've reached the trailhead.</h2>
+        <div class="contact f">
+          <a href="mailto:you@example.com">Email</a>
+          <a href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a>
+          <a href="#" class="placeholder">Résumé (PDF)</a>
+        </div>
+        <nav class="signs f" id="signs" aria-label="Jump to a section"></nav>
+      </div>
+    </section>
+  </main>
+  <footer>© <span id="year"></span> Tessa · Leave no trace</footer>
+
+<script>
+(function () {
+  var TOP_FT = 7160, BOTTOM_FT = 600;
+  var reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var world = document.getElementById('world');
+  var layers = Array.prototype.slice.call(world.querySelectorAll('.layer'));
+  layers.forEach(function (l) { l._speed = parseFloat(l.dataset.speed || 1); });
+  var sections = Array.prototype.slice.call(document.querySelectorAll('.section'));
+  // The trailhead stays fully visible: it's where the page ends, so it never reaches the middle of the screen
+  var focusEls = Array.prototype.slice.call(document.querySelectorAll('.section:not(.trailhead) .f'));
+  var elevN = document.getElementById('elev-n');
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  function scrollToEl(el) {
+    var r = el.getBoundingClientRect();
+    window.scrollTo({ top: r.top + window.scrollY + r.height / 2 - innerHeight / 2, behavior: reduceMotion ? 'auto' : 'smooth' });
+  }
+
+  // Trail-sign buttons, one per section that has data-sign
+  var signs = document.getElementById('signs');
+  sections.forEach(function (s) {
+    if (!s.dataset.sign) return;
+    var b = document.createElement('button');
+    b.className = 'sign';
+    b.innerHTML = '<span class="arrow">↑</span>' + s.dataset.sign;
+    b.addEventListener('click', function () { scrollToEl(s); });
+    signs.appendChild(b);
+  });
+  document.getElementById('brand').addEventListener('click', function (e) { e.preventDefault(); scrollToEl(sections[0]); });
+
+  // Map page scroll -> camera position in the world, so each section lines up with its scenery
+  var anchors = [], worldMax = 0, vh = innerHeight;
+  function layout() {
+    vh = innerHeight;
+    worldMax = world.offsetHeight - vh;
+    var max = document.documentElement.scrollHeight - vh;
+    var y0 = window.scrollY;
+    anchors = [[0, 0]];
+    sections.forEach(function (s) {
+      if (!s.dataset.world) return;
+      var r = s.getBoundingClientRect();
+      var sc = Math.min(Math.max(r.top + y0 + r.height / 2 - vh / 2, 0), max);
+      var w = Math.min(Math.max(parseFloat(s.dataset.world) / 100 * vh - vh / 2, 0), worldMax);
+      var last = anchors[anchors.length - 1];
+      if (sc > last[0] && w >= last[1]) anchors.push([sc, w]);
+    });
+    anchors.push([Math.max(max, anchors[anchors.length - 1][0] + 1), worldMax]);
+    layers.forEach(function (l) { l._top = l.offsetTop - vh; l._bottom = l.offsetTop + l.offsetHeight + vh; l._mid = l.offsetTop + l.offsetHeight / 2; });
+  }
+  function cameraAt(s) {
+    for (var i = 1; i < anchors.length; i++) {
+      var a = anchors[i - 1], b = anchors[i];
+      if (s <= b[0]) return a[1] + (b[1] - a[1]) * Math.max(0, (s - a[0]) / (b[0] - a[0]));
+    }
+    return worldMax;
+  }
+
+  var lastFt = '', lastElevHidden = null, lastHud = null;
+  var elev = document.getElementById('elev');
+  var parallax = layers.filter(function (l) { return l._speed !== 1; });
+  parallax.forEach(function (l) { l.style.willChange = 'transform'; });
+
+  // Text positions are measured once (in measureText), not while scrolling
+  var focus = [];
+  function measureText() {
+    var y0 = window.scrollY;
+    focus = focusEls.map(function (el) {
+      el.style.opacity = '';
+      var r = el.getBoundingClientRect();
+      return { el: el, top: r.top + y0, bottom: r.bottom + y0, op: -1 };
+    });
+  }
+
+  function update() {
+    ticking = false;
+    var s = window.scrollY;
+    var cam = cameraAt(s);
+    world.style.transform = 'translate3d(0,' + (-cam).toFixed(1) + 'px,0)';
+
+    // Only photos near the screen are drawn; near layers slide faster than the camera (parallax)
+    layers.forEach(function (l) {
+      var near = l._bottom > cam - vh && l._top < cam + vh * 2;
+      if (near !== l._near) { l.style.visibility = near ? '' : 'hidden'; l._near = near; }
+      if (near && l._speed !== 1 && !reduceMotion) {
+        l.style.transform = 'translate3d(0,' + (-(cam + vh / 2 - l._mid) * (l._speed - 1)).toFixed(1) + 'px,0)';
+      }
+    });
+
+    // Elevation counts down from the peak to the trailhead
+    var ft = (Math.round((TOP_FT - (cam / worldMax) * (TOP_FT - BOTTOM_FT)) / 10) * 10).toLocaleString();
+    if (ft !== lastFt) { elevN.textContent = ft; lastFt = ft; }
+    var hidden = cam > worldMax - vh * 0.6;
+    if (hidden !== lastElevHidden) { elev.style.opacity = hidden ? 0 : 1; lastElevHidden = hidden; }
+    var hud = cam > 4.6 * vh || cam < 0.6 * vh;
+    if (hud !== lastHud) { document.body.classList.toggle('hud-light', hud); lastHud = hud; }
+
+    // Focus: text is solid near the middle of the screen and fades toward the edges
+    if (!reduceMotion) {
+      var mid = s + vh * 0.5;
+      focus.forEach(function (f) {
+        var dist = f.bottom < mid ? mid - f.bottom : f.top > mid ? f.top - mid : 0;
+        var d = dist / (vh * 0.5);
+        var op = Math.round((1 - Math.min(Math.max((d - 0.3) / 0.6, 0), 1) * 0.8) * 20) / 20;
+        if (op !== f.op) { f.el.style.opacity = op; f.op = op; }
+      });
+    }
+  }
+
+  // Work happens only when the page actually scrolls
+  var ticking = false;
+  function requestUpdate() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+  addEventListener('scroll', requestUpdate, { passive: true });
+
+  // Phones resize the window as the address bar slides in and out; only re-measure for real size changes
+  var lastW = innerWidth, lastH = innerHeight;
+  addEventListener('resize', function () {
+    if (innerWidth === lastW && Math.abs(innerHeight - lastH) < 150) return;
+    lastW = innerWidth; lastH = innerHeight;
+    layout(); measureText(); requestUpdate();
+  });
+  function start() {
+    layout(); measureText(); update();
+    setTimeout(function () { document.body.classList.add('loaded'); }, 400);
+  }
+  if (document.readyState === 'complete') start(); else addEventListener('load', start);
+  if (document.fonts) document.fonts.ready.then(function () { layout(); measureText(); requestUpdate(); });
+})();
+</script>
+</body>
+</html>
