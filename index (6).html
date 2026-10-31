@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tessa</title>
+<meta name="description" content="Tessa: from the peaks to the trailhead.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Inter:wght@400;500&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #fbf6ea;
+    --ink: #1f2420;
+    --tag: #f6c33b;
+    --wood: #9a5f35;
+    --wood-dark: #6e4022;
+    --serif: "Newsreader", Georgia, serif;
+    --mono: "IBM Plex Mono", ui-monospace, monospace;
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #1d261c;
+    color: var(--ink);
+    font-family: Inter, system-ui, sans-serif;
+    font-size: 18px;
+    line-height: 1.7;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+
+  /* ---------- The scenery: one tall "world" the camera descends through ---------- */
+  #scene { position: fixed; inset: 0; overflow: hidden; z-index: 0; }
+  #world {
+    position: absolute; left: 0; top: 0; width: 100%; height: 480vh; will-change: transform;
+    background: linear-gradient(to bottom,
+      #6f88a3 0vh, #ecd3a6 120vh, #efe9e6 205vh, #d6d9d6 330vh,
+      #cfd2cf 400vh, #3f4d3c 480vh);
+  }
+  .layer { position: absolute; left: 0; width: 100%; }
+  .layer img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .fade-top img { -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 16%); mask-image: linear-gradient(to bottom, transparent 0, #000 16%); }
+  .fade-top.soft img { -webkit-mask-image: linear-gradient(to bottom, transparent 0, rgba(0,0,0,0.5) 14%, #000 32%); mask-image: linear-gradient(to bottom, transparent 0, rgba(0,0,0,0.5) 14%, #000 32%); }
+  .fade-both img { -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 30%, #000 65%, transparent 100%); mask-image: linear-gradient(to bottom, transparent 0, #000 30%, #000 65%, transparent 100%); }
+  .fade-bottom img { -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent 100%); mask-image: linear-gradient(to bottom, #000 70%, transparent 100%); }
+  .cut img { -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent 98%); mask-image: linear-gradient(to bottom, #000 55%, transparent 98%); }
+
+  /* Halftone print texture over the scenery */
+  #halftone {
+    position: fixed; inset: 0; z-index: 1; pointer-events: none;
+    background-image: radial-gradient(rgba(25, 20, 10, 0.5) 0.8px, transparent 1.3px);
+    background-size: 4px 4px;
+    opacity: 0.22;
+  }
+
+  /* ---------- Fixed UI ---------- */
+  #loader {
+    position: fixed; inset: 0; z-index: 50; display: grid; place-items: center;
+    background: #6f88a3; color: var(--cream);
+    font-family: var(--mono); font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase;
+    transition: opacity 1s var(--ease), visibility 1s;
+  }
+  body.loaded #loader { opacity: 0; visibility: hidden; }
+
+  .hud { position: fixed; z-index: 10; font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink); transition: color 0.6s; }
+  body.hud-light .hud { color: var(--cream); }
+  #brand { top: 24px; left: clamp(16px, 3vw, 36px); text-decoration: none; font-family: var(--serif); font-size: 22px; letter-spacing: 0; text-transform: none; }
+  #links { top: 31px; left: calc(clamp(16px, 3vw, 36px) + 120px); display: flex; gap: 10px; }
+  #links a { text-decoration: none; }
+  #links a:hover { text-decoration: underline; }
+  #elev {
+    left: clamp(16px, 3vw, 36px); top: 50%; transform: translateY(-50%); line-height: 1.6;
+    background: rgba(244, 241, 232, 0.78); padding: 10px 14px; border-radius: 8px;
+    transition: opacity 0.6s;
+  }
+  body.hud-light #elev { color: var(--ink); }
+  #elev .label { opacity: 0.65; }
+  #elev .n { font-size: 14px; }
+
+  /* ---------- Content column ---------- */
+  main { position: relative; z-index: 2; }
+  .section { position: relative; min-height: 100vh; padding: 22vh 20px; display: flex; flex-direction: column; justify-content: center; }
+  .col { position: relative; width: 100%; max-width: 680px; margin: 0 auto; }
+  /* Soft shadows keep text readable over any photo */
+  .col { text-shadow: 0 0 10px rgba(251, 246, 234, 0.85); }
+  .f { transition: opacity 0.25s linear; }
+  .ink-light { color: var(--cream); }
+  .ink-light .col { text-shadow: 0 1px 2px rgba(10, 14, 10, 0.6), 0 0 16px rgba(10, 14, 10, 0.75); }
+  .tag { text-shadow: none; }
+
+  .tag {
+    display: inline-block; background: var(--tag); color: var(--ink);
+    font-family: var(--mono); font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 6px 14px; transform: rotate(-1.5deg); margin-bottom: 28px;
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.08);
+  }
+  h1, h2, h3 { font-family: var(--serif); font-weight: 500; letter-spacing: -0.015em; line-height: 1.1; }
+  h1 { font-size: clamp(72px, 14vw, 180px); line-height: 0.95; letter-spacing: -0.03em; }
+  h2 { font-size: clamp(36px, 5vw, 56px); margin-bottom: 28px; }
+  h3 { font-size: 26px; }
+  .col p + p { margin-top: 1.1em; }
+  .lede { font-size: clamp(20px, 2.2vw, 24px); margin-top: 24px; }
+  .hint { margin-top: 48px; font-family: var(--mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.75; }
+  .placeholder { opacity: 0.7; font-style: italic; }
+
+  .entries { list-style: none; margin-top: 36px; display: grid; gap: 28px; }
+  .entry { border-top: 1px solid currentColor; padding-top: 18px; border-color: rgba(31, 36, 32, 0.25); }
+  .ink-light .entry { border-color: rgba(251, 246, 234, 0.3); }
+  .entry .meta { font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.75; display: flex; justify-content: space-between; gap: 16px; margin-bottom: 6px; }
+  .entry p { margin-top: 6px; }
+  .entry a { font-family: var(--mono); font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; }
+
+  /* ---------- Final card: soft light box with contact links ---------- */
+  .card .col { background: rgba(244, 241, 232, 0.78); padding: 36px 40px; border-radius: 8px; text-shadow: none; }
+  @media (max-width: 720px) { .card .col { padding: 24px 20px; } }
+  /* First box: name + photo side by side (photo on top on phones) */
+  .hero { display: flex; align-items: center; gap: 32px; }
+  .hero-text { flex: 1; min-width: 0; }
+  .hero h1 { font-size: clamp(64px, 11vw, 140px); }
+  .portrait { width: 150px; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 6px; flex-shrink: 0; box-shadow: 0 10px 24px -12px rgba(0, 0, 0, 0.45); }
+  @media (max-width: 720px) {
+    .hero { flex-direction: column-reverse; align-items: flex-start; gap: 20px; }
+    .portrait { width: 110px; }
+  }
+  .contact { display: flex; flex-wrap: wrap; gap: 12px 24px; margin-top: 8px; font-family: var(--mono); font-size: 14px; letter-spacing: 0.06em; text-transform: uppercase; }
+  .contact a { text-decoration: none; border-bottom: 2px solid var(--tag); padding-bottom: 2px; }
+  .contact a:hover { color: var(--wood); }
+  footer { position: relative; z-index: 2; padding: 0 20px 28px; text-align: center; color: var(--cream); font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.7; }
+
+  @media (max-width: 720px) {
+    body { font-size: 17px; }
+    #elev { top: auto; bottom: 20px; transform: none; }
+    #elev .label { display: none; }
+    .section { padding: 18vh 22px; }
+    footer { padding-bottom: 56px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { transition-duration: 0.01ms !important; }
+  }
+</style>
+</head>
+<body>
+  <div id="loader">Ascending to 7,160 ft…</div>
+  <script>setTimeout(function () { document.body.classList.add('loaded'); }, 5000);</script>
+
+  <!--
+    SWAPPING PHOTOS: replace a photo with a new one of the same name and refresh.
+      Full photos (any photo works):  sky, snow-valley, hill-a, hill-b
+      Cut-outs (sky must be removed, saved as a transparent .webp or .png):  peaks
+    To reframe a photo, change its object-position (e.g. "50% 10%" = centered, near the top).
+    Scenery layers: top/height are in vh; data-speed > 1 = closer to the camera (moves faster).
+  -->
+  <div id="scene" aria-hidden="true">
+    <div id="world">
+      <!-- Above the clouds: golden sky, snowy peaks, ski runs -->
+      <div class="layer fade-bottom" data-speed="0.85" style="top:0;height:125vh"><img src="sky.webp" alt="" style="object-position:50% 75%"></div>
+      <div class="layer cut" data-speed="1" style="top:105vh;height:125vh"><img src="peaks.webp" alt="" style="object-position:50% 0"></div>
+      <div class="layer fade-both" data-speed="0.95" style="top:205vh;height:170vh"><img src="snow-valley.webp" alt="" style="object-position:60% 45%"></div>
+      <!-- Below the snow: the green forest (the page ends where these two overlap) -->
+      <div class="layer fade-both" data-speed="1.04" style="top:325vh;height:130vh"><img src="hill-a.webp" alt="" loading="lazy" style="object-position:50% 50%"></div>
+      <div class="layer fade-both" data-speed="1.06" style="top:400vh;height:130vh"><img src="hill-b.webp" alt="" loading="lazy" style="object-position:50% 40%"></div>
+    </div>
+  </div>
+  <div id="halftone" aria-hidden="true"></div>
+
+  <a id="brand" class="hud" href="#summit">Tessa</a>
+    <nav id="links" class="hud" aria-label="Contact">
+    <a href="mailto:tessa@wangs.net">Email</a><span>·</span>
+    <a href="https://www.linkedin.com/in/tessa-wang/" target="_blank" rel="noopener">LinkedIn</a><span>·</span>
+    <a href="https://github.com/tessa-wang/" target="_blank" rel="noopener">GitHub</a>
+  </nav>
+  <div id="elev" class="hud" aria-hidden="true">
+    <div class="label">Elevation</div>
+    <div class="n"><span id="elev-n">7,160</span> ft</div>
+  </div>
+
+  <!--
+    EDITING: each section below is one stop on the way down.
+    - data-world: where in the scenery (vh from the top) the section sits.
+    - ink-light: use light text over dark scenery.
+  -->
+  <main>
+    <section class="section card" id="summit" data-world="150">
+      <div class="col hero">
+        <div class="hero-text">
+          <span class="tag f">7,160 ft / Whistler Peak</span>
+          <h1 class="f">Tessa</h1>
+          <p class="lede f placeholder">[One-line intro goes here.]</p>
+          <p class="hint f">Scroll to descend ↓</p>
+        </div>
+        <img class="portrait f" src="tessa.webp" alt="Portrait of Tessa">
+      </div>
+    </section>
+
+    <section class="section" id="about" data-world="215">
+      <div class="col">
+        <span class="tag f">01 / About</span>
+        <h2 class="f">A little about me</h2>
+        <p class="f placeholder">[About me: a few sentences about who you are, where you're from and what you're studying or working on.]</p>
+        <p class="f placeholder">[A second paragraph: what you care about, what you love about the mountains, what you're looking for next.]</p>
+      </div>
+    </section>
+
+    <section class="section card end" id="trailhead" data-world="430">
+      <div class="col">
+        <span class="tag">02 / Trailhead · 600 ft</span>
+        <h2>You've reached the trailhead.</h2>
+        <div class="contact">
+          <a href="mailto:tessa@wangs.net">Email</a>
+          <a href="https://www.linkedin.com/in/tessa-wang/" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://github.com/tessa-wang/" target="_blank" rel="noopener">GitHub</a>
+          <a href="#" class="placeholder">Résumé (PDF)</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer>© <span id="year"></span> Tessa · Leave no trace</footer>
+
+<script>
+(function () {
+  var TOP_FT = 7160, BOTTOM_FT = 600;
+  var START_VH = 95; // where the camera starts in the scenery (vh from the top): just above the peaks
+  var reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var world = document.getElementById('world');
+  var layers = Array.prototype.slice.call(world.querySelectorAll('.layer'));
+  layers.forEach(function (l) { l._speed = parseFloat(l.dataset.speed || 1); });
+  var sections = Array.prototype.slice.call(document.querySelectorAll('.section'));
+  var focusEls = Array.prototype.slice.call(document.querySelectorAll('.section .f'));
+  var elevN = document.getElementById('elev-n');
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  function scrollToEl(el) {
+    var r = el.getBoundingClientRect();
+    window.scrollTo({ top: r.top + window.scrollY + r.height / 2 - innerHeight / 2, behavior: reduceMotion ? 'auto' : 'smooth' });
+  }
+
+  document.getElementById('brand').addEventListener('click', function (e) { e.preventDefault(); scrollToEl(sections[0]); });
+
+  // Map page scroll -> camera position in the world, so each section lines up with its scenery
+  var anchors = [], worldMin = 0, worldMax = 0, vh = innerHeight;
+  function layout() {
+    vh = innerHeight;
+    worldMax = world.offsetHeight - vh;
+    worldMin = Math.min(START_VH / 100 * vh, worldMax);
+    var max = document.documentElement.scrollHeight - vh;
+    var y0 = window.scrollY;
+    anchors = [[0, worldMin]];
+    sections.forEach(function (s) {
+      if (!s.dataset.world) return;
+      var r = s.getBoundingClientRect();
+      var sc = Math.min(Math.max(r.top + y0 + r.height / 2 - vh / 2, 0), max);
+      var w = Math.min(Math.max(parseFloat(s.dataset.world) / 100 * vh - vh / 2, worldMin), worldMax);
+      var last = anchors[anchors.length - 1];
+      if (sc > last[0] && w >= last[1]) anchors.push([sc, w]);
+    });
+    anchors.push([Math.max(max, anchors[anchors.length - 1][0] + 1), worldMax]);
+    layers.forEach(function (l) { l._top = l.offsetTop - vh; l._bottom = l.offsetTop + l.offsetHeight + vh; l._mid = l.offsetTop + l.offsetHeight / 2; });
+  }
+  function cameraAt(s) {
+    for (var i = 1; i < anchors.length; i++) {
+      var a = anchors[i - 1], b = anchors[i];
+      if (s <= b[0]) return a[1] + (b[1] - a[1]) * Math.max(0, (s - a[0]) / (b[0] - a[0]));
+    }
+    return worldMax;
+  }
+
+  var lastFt = '', lastElevHidden = null, lastHud = null;
+  var elev = document.getElementById('elev');
+  var parallax = layers.filter(function (l) { return l._speed !== 1; });
+  parallax.forEach(function (l) { l.style.willChange = 'transform'; });
+
+  // Text positions are measured once (in measureText), not while scrolling
+  var focus = [];
+  function measureText() {
+    var y0 = window.scrollY;
+    focus = focusEls.map(function (el) {
+      el.style.opacity = '';
+      var r = el.getBoundingClientRect();
+      return { el: el, top: r.top + y0, bottom: r.bottom + y0, op: -1 };
+    });
+  }
+
+  function update() {
+    ticking = false;
+    var s = window.scrollY;
+    var cam = cameraAt(s);
+    world.style.transform = 'translate3d(0,' + (-cam).toFixed(1) + 'px,0)';
+
+    // Only photos near the screen are drawn; near layers slide faster than the camera (parallax)
+    layers.forEach(function (l) {
+      var near = l._bottom > cam - vh && l._top < cam + vh * 2;
+      if (near !== l._near) { l.style.visibility = near ? '' : 'hidden'; l._near = near; }
+      if (near && l._speed !== 1 && !reduceMotion) {
+        l.style.transform = 'translate3d(0,' + (-(cam + vh / 2 - l._mid) * (l._speed - 1)).toFixed(1) + 'px,0)';
+      }
+    });
+
+    // Elevation counts down from the peak to the trailhead
+    var t = worldMax > worldMin ? (cam - worldMin) / (worldMax - worldMin) : 0;
+    var ft = (Math.round((TOP_FT - t * (TOP_FT - BOTTOM_FT)) / 10) * 10).toLocaleString();
+    if (ft !== lastFt) { elevN.textContent = ft; lastFt = ft; }
+    var hidden = innerWidth <= 720 && cam > worldMax - vh * 0.6; // on phones it would cover the last box
+    if (hidden !== lastElevHidden) { elev.style.opacity = hidden ? 0 : 1; lastElevHidden = hidden; }
+    var hud = cam > 2.9 * vh;
+    if (hud !== lastHud) { document.body.classList.toggle('hud-light', hud); lastHud = hud; }
+
+    // Focus: text is solid near the middle of the screen and fades toward the edges
+    if (!reduceMotion) {
+      var mid = s + vh * 0.5;
+      focus.forEach(function (f) {
+        var dist = f.bottom < mid ? mid - f.bottom : f.top > mid ? f.top - mid : 0;
+        var d = dist / (vh * 0.5);
+        var op = Math.round((1 - Math.min(Math.max((d - 0.3) / 0.6, 0), 1) * 0.8) * 20) / 20;
+        if (op !== f.op) { f.el.style.opacity = op; f.op = op; }
+      });
+    }
+  }
+
+  // Work happens only when the page actually scrolls
+  var ticking = false;
+  function requestUpdate() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+  addEventListener('scroll', requestUpdate, { passive: true });
+
+  // Phones resize the window as the address bar slides in and out; only re-measure for real size changes
+  var lastW = innerWidth, lastH = innerHeight;
+  addEventListener('resize', function () {
+    if (innerWidth === lastW && Math.abs(innerHeight - lastH) < 150) return;
+    lastW = innerWidth; lastH = innerHeight;
+    layout(); measureText(); requestUpdate();
+  });
+  function start() {
+    layout(); measureText(); update();
+    setTimeout(function () { document.body.classList.add('loaded'); }, 400);
+  }
+  if (document.readyState === 'complete') start(); else addEventListener('load', start);
+  if (document.fonts) document.fonts.ready.then(function () { layout(); measureText(); requestUpdate(); });
+})();
+</script>
+</body>
+</html>
