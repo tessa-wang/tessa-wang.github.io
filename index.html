@@ -34,10 +34,10 @@
   /* ---------- The scenery: one tall "world" the camera descends through ---------- */
   #scene { position: fixed; inset: 0; overflow: hidden; z-index: 0; }
   #world {
-    position: absolute; left: 0; top: 0; width: 100%; height: 695vh; will-change: transform;
+    position: absolute; left: 0; top: 0; width: 100%; height: 480vh; will-change: transform;
     background: linear-gradient(to bottom,
       #6f88a3 0vh, #ecd3a6 120vh, #efe9e6 205vh, #d6d9d6 330vh,
-      #cfd2cf 420vh, #cfd2cf 510vh, #6f7d68 590vh, #2c3a2b 695vh);
+      #cfd2cf 400vh, #3f4d3c 480vh);
   }
   .layer { position: absolute; left: 0; width: 100%; }
   .layer img { display: block; width: 100%; height: 100%; object-fit: cover; }
@@ -45,12 +45,6 @@
   .fade-top.soft img { -webkit-mask-image: linear-gradient(to bottom, transparent 0, rgba(0,0,0,0.5) 14%, #000 32%); mask-image: linear-gradient(to bottom, transparent 0, rgba(0,0,0,0.5) 14%, #000 32%); }
   .fade-both img { -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 30%, #000 65%, transparent 100%); mask-image: linear-gradient(to bottom, transparent 0, #000 30%, #000 65%, transparent 100%); }
   .fade-bottom img { -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent 100%); mask-image: linear-gradient(to bottom, #000 70%, transparent 100%); }
-  /* Cut-out layers (sky removed): always melt away at the bottom, however the photo is cropped */
-  /* Fog hand-off: the fog photo melts in, the trail photo rises out of it, and a thin veil hides the seam */
-  .fog-in img { -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 30%, #000 70%, transparent 100%); mask-image: linear-gradient(to bottom, transparent 0, #000 30%, #000 70%, transparent 100%); }
-  .fog-out img { -webkit-mask-image: linear-gradient(to bottom, transparent 0, rgba(0,0,0,0.25) 14%, rgba(0,0,0,0.7) 28%, #000 40%); mask-image: linear-gradient(to bottom, transparent 0, rgba(0,0,0,0.25) 14%, rgba(0,0,0,0.7) 28%, #000 40%); }
-  .fog-veil { background: linear-gradient(to bottom, rgba(207,210,207,0) 0%, rgba(207,210,207,0.85) 38%, rgba(207,210,207,0.85) 48%, rgba(207,210,207,0) 100%); }
-  .cut-long img { -webkit-mask-image: linear-gradient(to bottom, #000 82%, transparent 100%); mask-image: linear-gradient(to bottom, #000 82%, transparent 100%); }
   .cut img { -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent 98%); mask-image: linear-gradient(to bottom, #000 55%, transparent 98%); }
 
   /* Halftone print texture over the scenery */
@@ -73,7 +67,7 @@
   .hud { position: fixed; z-index: 10; font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink); transition: color 0.6s; }
   body.hud-light .hud { color: var(--cream); }
   #brand { top: 24px; left: clamp(16px, 3vw, 36px); text-decoration: none; font-family: var(--serif); font-size: 22px; letter-spacing: 0; text-transform: none; }
-  #links { top: 31px; left: clamp(16px, 3vw, 36px) + 120px); display: flex; gap: 10px; }
+  #links { top: 31px; left: calc(clamp(16px, 3vw, 36px) + 120px); display: flex; gap: 10px; }
   #links a { text-decoration: none; }
   #links a:hover { text-decoration: underline; }
   #elev {
@@ -94,7 +88,7 @@
   .f { transition: opacity 0.25s linear; }
   .ink-light { color: var(--cream); }
   .ink-light .col { text-shadow: 0 1px 2px rgba(10, 14, 10, 0.6), 0 0 16px rgba(10, 14, 10, 0.75); }
-  .tag, .sign { text-shadow: none; }
+  .tag { text-shadow: none; }
 
   .tag {
     display: inline-block; background: var(--tag); color: var(--ink);
@@ -118,40 +112,12 @@
   .entry p { margin-top: 6px; }
   .entry a { font-family: var(--mono); font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; }
 
-  /* ---------- Trailhead: carved trail-sign buttons ---------- */
-  /* Projects sits over both dark forest and pale fog, so it gets a soft light card */
-  #projects .col { background: rgba(244, 241, 232, 0.78); padding: 36px 40px; border-radius: 8px; text-shadow: none; }
-  @media (max-width: 720px) { #projects .col { padding: 24px 20px; } }
-  /* Final content: a box over the tree stump in the trail photo */
-  .trailhead { justify-content: center; padding-top: 8vh; padding-bottom: 6vh; min-height: 100vh; }
-  .trailhead .col {
-    max-width: 620px; min-height: 82vh; padding: 40px 40px 36px; border-radius: 8px;
-    display: flex; flex-direction: column; justify-content: center;
-    background: rgba(20, 28, 20, 0.8); box-shadow: 0 20px 50px -20px rgba(0, 0, 0, 0.55);
-    text-shadow: none;
-  }
-  body { position: relative; }
-  footer { position: absolute; left: 0; right: 0; bottom: 0; z-index: 3; }
-  .trailhead .col { text-shadow: none; }
+  /* ---------- Final card: soft light box with contact links ---------- */
+  .card .col { background: rgba(244, 241, 232, 0.78); padding: 36px 40px; border-radius: 8px; text-shadow: none; }
+  @media (max-width: 720px) { .card .col { padding: 24px 20px; } }
   .contact { display: flex; flex-wrap: wrap; gap: 12px 24px; margin-top: 8px; font-family: var(--mono); font-size: 14px; letter-spacing: 0.06em; text-transform: uppercase; }
-  .contact a { text-decoration: none; border-bottom: 1px solid var(--tag); padding-bottom: 2px; }
-  .contact a:hover { color: var(--tag); }
-  .signs { display: flex; flex-wrap: wrap; gap: 14px 12px; margin-top: 40px; }
-  .sign {
-    position: relative; border: 0; cursor: pointer;
-    font-family: var(--serif); font-size: 20px; color: #3a2210;
-    padding: 10px 34px 10px 18px;
-    background:
-      repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.05) 0 2px, transparent 2px 9px),
-      linear-gradient(to bottom, #c18454, var(--wood) 55%, var(--wood-dark));
-    clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 50%, calc(100% - 18px) 100%, 0 100%);
-    text-shadow: 0 1px 0 rgba(255, 220, 180, 0.45);
-    transition: transform 0.4s var(--ease), filter 0.3s;
-  }
-  .sign:nth-child(odd) { transform: rotate(-1.2deg); }
-  .sign:nth-child(even) { transform: rotate(1deg); }
-  .sign:hover, .sign:focus-visible { transform: translateY(-3px) rotate(0); filter: brightness(1.12); outline: none; }
-  .sign .arrow { font-family: var(--mono); font-size: 14px; margin-right: 8px; }
+  .contact a { text-decoration: none; border-bottom: 2px solid var(--tag); padding-bottom: 2px; }
+  .contact a:hover { color: var(--wood); }
   footer { position: relative; z-index: 2; padding: 0 20px 28px; text-align: center; color: var(--cream); font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.7; }
 
   @media (max-width: 720px) {
@@ -159,8 +125,6 @@
     #elev { top: auto; bottom: 20px; transform: none; }
     #elev .label { display: none; }
     .section { padding: 18vh 22px; }
-    #trail-img { object-position: 60% 70% !important; } /* keep the path and sign in view */
-    .trailhead .col { width: auto; min-height: 0; padding: 26px 22px; border-radius: 6px; }
     footer { padding-bottom: 56px; }
   }
   @media (prefers-reduced-motion: reduce) {
@@ -173,8 +137,8 @@
   <script>setTimeout(function () { document.body.classList.add('loaded'); }, 5000);</script>
 
   <!--
-    SWAPPING PHOTOS: replace a file in photos/ with a new one of the same name and refresh.
-      Full photos (any photo works):  sky, snow-valley, hill-a, hill-b, sign-trail
+    SWAPPING PHOTOS: replace a photo with a new one of the same name and refresh.
+      Full photos (any photo works):  sky, snow-valley, hill-a, hill-b
       Cut-outs (sky must be removed, saved as a transparent .webp or .png):  peaks
     To reframe a photo, change its object-position (e.g. "50% 10%" = centered, near the top).
     Scenery layers: top/height are in vh; data-speed > 1 = closer to the camera (moves faster).
@@ -185,12 +149,9 @@
       <div class="layer fade-bottom" data-speed="0.85" style="top:0;height:125vh"><img src="sky.webp" alt="" style="object-position:50% 75%"></div>
       <div class="layer cut" data-speed="1" style="top:105vh;height:125vh"><img src="peaks.webp" alt="" style="object-position:50% 0"></div>
       <div class="layer fade-both" data-speed="0.95" style="top:205vh;height:170vh"><img src="snow-valley.webp" alt="" style="object-position:60% 45%"></div>
-      <!-- Below the snow: the green forest -->
-      <!-- Into the fog, and out onto the trail -->
+      <!-- Below the snow: the green forest (the page ends where these two overlap) -->
       <div class="layer fade-both" data-speed="1.04" style="top:325vh;height:130vh"><img src="hill-a.webp" alt="" loading="lazy" style="object-position:50% 50%"></div>
       <div class="layer fade-both" data-speed="1.06" style="top:400vh;height:130vh"><img src="hill-b.webp" alt="" loading="lazy" style="object-position:50% 40%"></div>
-      <div class="layer fog-out" data-speed="1" style="top:490vh;height:205vh"><img id="trail-img" src="sign-trail.webp" alt="" loading="lazy" style="object-position:50% 70%"></div>
-      <div class="layer fog-veil" data-speed="1" style="top:470vh;height:105vh"></div>
     </div>
   </div>
   <div id="halftone" aria-hidden="true"></div>
@@ -209,11 +170,10 @@
   <!--
     EDITING: each section below is one stop on the way down.
     - data-world: where in the scenery (vh from the top) the section sits.
-    - data-sign: the label on its trail-sign button at the trailhead (leave it off to skip a button).
     - ink-light: use light text over dark scenery.
   -->
   <main>
-    <section class="section ink-light" id="summit" data-world="50" data-sign="Summit">
+    <section class="section" id="summit" data-world="150">
       <div class="col">
         <span class="tag f">7,160 ft / Whistler Peak</span>
         <h1 class="f">Tessa</h1>
@@ -222,7 +182,7 @@
       </div>
     </section>
 
-    <section class="section" id="about" data-world="165" data-sign="About">
+    <section class="section" id="about" data-world="215">
       <div class="col">
         <span class="tag f">01 / About</span>
         <h2 class="f">A little about me</h2>
@@ -231,41 +191,16 @@
       </div>
     </section>
 
-    <section class="section ink-light" id="sports" data-world="245" data-sign="Sports">
+    <section class="section card end" id="trailhead" data-world="430">
       <div class="col">
-        <span class="tag f">02 / Sports</span>
-        <h2 class="f">On snow and on trail</h2>
-        <ul class="entries">
-          <li class="entry f"><div class="meta"><span>[Sport]</span><span>[Years]</span></div><h3>[e.g. Alpine ski racing]</h3><p class="placeholder">[Club, level, a highlight or result.]</p></li>
-          <li class="entry f"><div class="meta"><span>[Sport]</span><span>[Years]</span></div><h3>[e.g. Hiking the North Shore]</h3><p class="placeholder">[Favourite trails, a big objective, who you go with.]</p></li>
-          <li class="entry f"><div class="meta"><span>[Sport]</span><span>[Years]</span></div><h3>[Another sport]</h3><p class="placeholder">[A line or two.]</p></li>
-        </ul>
-      </div>
-    </section>
-
-    <section class="section" id="projects" data-world="395" data-sign="Projects">
-      <div class="col">
-        <span class="tag f">03 / Projects</span>
-        <h2 class="f">Things I've built</h2>
-        <ul class="entries">
-          <li class="entry f"><div class="meta"><span>[Tech used]</span><span>[Year]</span></div><h3>[Project name]</h3><p class="placeholder">[One or two lines on what it does and why you made it.]</p><a href="#">View project ↗</a></li>
-          <li class="entry f"><div class="meta"><span>[Tech used]</span><span>[Year]</span></div><h3>[Project name]</h3><p class="placeholder">[One or two lines on what it does and why you made it.]</p><a href="#">View project ↗</a></li>
-          <li class="entry f"><div class="meta"><span>[Tech used]</span><span>[Year]</span></div><h3>[Project name]</h3><p class="placeholder">[One or two lines on what it does and why you made it.]</p><a href="#">View project ↗</a></li>
-        </ul>
-      </div>
-    </section>
-
-    <section class="section trailhead ink-light" id="trailhead">
-      <div class="col">
-        <span class="tag f">05 / Trailhead · 600 ft</span>
-        <h2 class="f">You've reached the trailhead.</h2>
-        <div class="contact f">
-          <a href="mailto:you@example.com">Email</a>
-          <a href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn</a>
-          <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a>
+        <span class="tag">02 / Trailhead · 600 ft</span>
+        <h2>You've reached the trailhead.</h2>
+        <div class="contact">
+          <a href="mailto:tessa@wangs.net">Email</a>
+          <a href="https://www.linkedin.com/in/tessa-wang/" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://github.com/tessa-wang/" target="_blank" rel="noopener">GitHub</a>
           <a href="#" class="placeholder">Résumé (PDF)</a>
         </div>
-        <nav class="signs f" id="signs" aria-label="Jump to a section"></nav>
       </div>
     </section>
   </main>
@@ -274,13 +209,13 @@
 <script>
 (function () {
   var TOP_FT = 7160, BOTTOM_FT = 600;
+  var START_VH = 95; // where the camera starts in the scenery (vh from the top): just above the peaks
   var reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
   var world = document.getElementById('world');
   var layers = Array.prototype.slice.call(world.querySelectorAll('.layer'));
   layers.forEach(function (l) { l._speed = parseFloat(l.dataset.speed || 1); });
   var sections = Array.prototype.slice.call(document.querySelectorAll('.section'));
-  // The trailhead stays fully visible: it's where the page ends, so it never reaches the middle of the screen
-  var focusEls = Array.prototype.slice.call(document.querySelectorAll('.section:not(.trailhead) .f'));
+  var focusEls = Array.prototype.slice.call(document.querySelectorAll('.section .f'));
   var elevN = document.getElementById('elev-n');
   document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -289,31 +224,22 @@
     window.scrollTo({ top: r.top + window.scrollY + r.height / 2 - innerHeight / 2, behavior: reduceMotion ? 'auto' : 'smooth' });
   }
 
-  // Trail-sign buttons, one per section that has data-sign
-  var signs = document.getElementById('signs');
-  sections.forEach(function (s) {
-    if (!s.dataset.sign) return;
-    var b = document.createElement('button');
-    b.className = 'sign';
-    b.innerHTML = '<span class="arrow">↑</span>' + s.dataset.sign;
-    b.addEventListener('click', function () { scrollToEl(s); });
-    signs.appendChild(b);
-  });
   document.getElementById('brand').addEventListener('click', function (e) { e.preventDefault(); scrollToEl(sections[0]); });
 
   // Map page scroll -> camera position in the world, so each section lines up with its scenery
-  var anchors = [], worldMax = 0, vh = innerHeight;
+  var anchors = [], worldMin = 0, worldMax = 0, vh = innerHeight;
   function layout() {
     vh = innerHeight;
     worldMax = world.offsetHeight - vh;
+    worldMin = Math.min(START_VH / 100 * vh, worldMax);
     var max = document.documentElement.scrollHeight - vh;
     var y0 = window.scrollY;
-    anchors = [[0, 0]];
+    anchors = [[0, worldMin]];
     sections.forEach(function (s) {
       if (!s.dataset.world) return;
       var r = s.getBoundingClientRect();
       var sc = Math.min(Math.max(r.top + y0 + r.height / 2 - vh / 2, 0), max);
-      var w = Math.min(Math.max(parseFloat(s.dataset.world) / 100 * vh - vh / 2, 0), worldMax);
+      var w = Math.min(Math.max(parseFloat(s.dataset.world) / 100 * vh - vh / 2, worldMin), worldMax);
       var last = anchors[anchors.length - 1];
       if (sc > last[0] && w >= last[1]) anchors.push([sc, w]);
     });
@@ -360,11 +286,12 @@
     });
 
     // Elevation counts down from the peak to the trailhead
-    var ft = (Math.round((TOP_FT - (cam / worldMax) * (TOP_FT - BOTTOM_FT)) / 10) * 10).toLocaleString();
+    var t = worldMax > worldMin ? (cam - worldMin) / (worldMax - worldMin) : 0;
+    var ft = (Math.round((TOP_FT - t * (TOP_FT - BOTTOM_FT)) / 10) * 10).toLocaleString();
     if (ft !== lastFt) { elevN.textContent = ft; lastFt = ft; }
-    var hidden = cam > worldMax - vh * 0.6;
+    var hidden = innerWidth <= 720 && cam > worldMax - vh * 0.6; // on phones it would cover the last box
     if (hidden !== lastElevHidden) { elev.style.opacity = hidden ? 0 : 1; lastElevHidden = hidden; }
-    var hud = cam > 2.9 * vh || cam < 0.6 * vh;
+    var hud = cam > 2.9 * vh;
     if (hud !== lastHud) { document.body.classList.toggle('hud-light', hud); lastHud = hud; }
 
     // Focus: text is solid near the middle of the screen and fades toward the edges
