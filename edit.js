@@ -11,7 +11,7 @@
 
   var EDITABLE = [
     'main .tag', 'main h1', 'main h2', 'main h3', 'main p', 'main .meta span',
-    'main .entry a', 'main .socials a', 'main .socials-label', 'main .contact a', '#links a'
+    'main .entry a', 'main .entry-links a', 'main .socials a', 'main .socials-label', 'main .contact a', '#links a'
   ].join(',');
 
   // ---------- Styles for the editing tools ----------
@@ -115,7 +115,7 @@
   addEventListener('beforeunload', function (e) { if (dirty) { e.preventDefault(); e.returnValue = ''; } });
 
   // ---------- Add / remove entries ----------
-  var BLANK = '<div class="meta"><span>[Detail]</span><span>[Year]</span></div><h3>[Title]</h3><p class="placeholder">[A line or two.]</p>';
+  var BLANK = '<p class="placeholder">[A line or two.]</p><a href="#">Link ↗</a>';
   function addDelete(li) {
     var x = document.createElement('button');
     x.type = 'button'; x.className = 'ed-del'; x.textContent = '×';
@@ -139,12 +139,11 @@
       var model = ul.querySelector('.entry');
       // copy the layout of an existing entry (including a link if it has one), but with blank text
       li.innerHTML = BLANK;
-      if (model && model.querySelector(':scope > a')) li.insertAdjacentHTML('beforeend', '<a href="#">View ↗</a>');
       var last = ul.lastChild; // keep the saved code neatly indented
       if (last && last.nodeType === 3) { ul.insertBefore(document.createTextNode('\n            '), last); ul.insertBefore(li, last); }
       else ul.appendChild(li);
       makeEditable(li); addDelete(li);
-      li.querySelector('h3').focus();
+      li.querySelector('p').focus();
       dirty = true; setMsg('Unsaved changes'); relayout();
     });
     ul.insertAdjacentElement('afterend', add);
@@ -162,6 +161,7 @@
       n.style.removeProperty('opacity');
       if (!n.getAttribute('style').trim()) n.removeAttribute('style');
     });
+    Array.prototype.forEach.call(c.querySelectorAll('.missing'), function (n) { n.classList.remove('missing'); });
     Array.prototype.forEach.call(c.querySelectorAll('[class=""]'), function (n) { n.removeAttribute('class'); });
     // toggle buttons: save with the first group selected
     var tabs = c.querySelectorAll('.tab');
