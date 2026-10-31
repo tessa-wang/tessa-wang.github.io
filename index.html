@@ -149,6 +149,11 @@
   .entry p + p { margin-top: 0.6em; }
   .bullets { margin: 6px 0 0 1.2em; }
   .bullets li + li { margin-top: 2px; }
+  /* Entry with a small photo on the right (photo goes under the text on phones) */
+  .side-pic { display: flex; gap: 20px; align-items: flex-start; }
+  .side-text { flex: 1; min-width: 0; }
+  .side-img { width: 150px; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 6px; flex-shrink: 0; }
+  @media (max-width: 720px) { .side-pic { flex-direction: column; gap: 12px; } }
   @media (max-width: 720px) {
     .pics img { width: calc(50% - 4px); max-width: 150px; }
     .tab { padding: 7px 12px; font-size: 12px; }
@@ -263,15 +268,19 @@
         </div>
         <div class="panel" id="panel-community" role="tabpanel" aria-labelledby="tab-community" hidden>
           <ul class="entries">
-            <li class="entry">
-              <p><b>York University Varsity Field Hockey</b></p>
-              <ul class="bullets">
-                <li>U SPORTS (Gold, Silver) and OUA (Gold, Silver, Bronze) medalist</li>
-                <li>Canadian U18 National Team member</li>
-              </ul>
+            <li class="entry side-pic">
+              <div class="side-text">
+                <p><b>York University Varsity Field Hockey</b></p>
+                <ul class="bullets">
+                  <li>U SPORTS (Gold, Silver) and OUA (Gold, Silver, Bronze) medalist</li>
+                  <li>Canadian U18 National Team member</li>
+                </ul>
+              </div>
+              <img class="side-img" src="hockey-champions.webp" alt="York field hockey team, 2025 U SPORTS champions">
             </li>
-            <li class="entry"><p><b>Bags of Promise, Vice President:</b> I lead fundraising for youth experiencing homelessness and run the club's operations and volunteers.</p></li>
-            <li class="entry"><p><b>Sport Council at York:</b> I coordinate Varsity Athletics events and mentor first-year student-athletes through weekly meetings.</p></li>
+            <li class="entry"><p><b>Bags of Promise, Vice President:</b> I lead fundraising for youth experiencing homelessness and run the club's operations and volunteers.</p><a href="#" target="_blank" rel="noopener">Bags of Promise ↗</a></li>
+            <li class="entry"><p><b>Sport Council at York:</b> I coordinate internal York University and Varsity Athletics events.</p></li>
+            <li class="entry"><p><b>Student-athlete mentoring:</b> I mentor first-year student-athletes through weekly meetings as they settle into varsity sport and university.</p></li>
             <li class="entry">
               <p><b>HopOn North Vancouver:</b> co-launched an after-school mountain biking program for girls with Cycling BC, focused on confidence, resilience, and being a good teammate.</p>
               <div class="entry-links"><a href="#">Read the recap ↗</a></div>
@@ -288,6 +297,7 @@
           <span class="socials-label">Other</span>
           <a href="https://github.com/tessa-wang/" target="_blank" rel="noopener">GitHub</a>
           <a href="#" class="placeholder">Resume</a>
+          <a href="#" target="_blank" rel="noopener">Substack</a>
         </div>
       </div>
     </section>
