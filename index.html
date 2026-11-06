@@ -129,8 +129,15 @@
   }
   .end { padding-bottom: 10vh; }
   /* About and Life sit close under the first box instead of a full screen apart */
+  /* Every box is the same 6vh apart: the first box no longer fills a whole screen */
+  #summit { min-height: 0; padding-bottom: 0; }
   #about { min-height: 0; padding-top: 6vh; padding-bottom: 6vh; }
   #trailhead { min-height: 0; padding-top: 0; }
+  /* Life tabs: all groups share one spot, so the box is always as tall as the longest
+     group (Community) and the scenery behind it never shifts when you switch tabs */
+  .panels { display: grid; }
+  .panel { grid-area: 1 / 1; }
+  .panel[hidden] { display: block; visibility: hidden; }
   .end h2 { font-size: clamp(30px, 4vw, 44px); margin-bottom: 24px; }
   /* Toggle buttons: Writing / Projects / Sports / Research */
   .tabs { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -274,6 +281,7 @@
           Each entry is a line or two of text and a link.
           To link somewhere, change href="#" to the address.
         -->
+        <div class="panels">
         <div class="panel" id="panel-projects" role="tabpanel" aria-labelledby="tab-projects">
           <ul class="entries">
             <li class="entry"><p><b>Loan Review Agent:</b> an AI agent I built in Python for the asset management team at ACM Advisors. It writes loan performance commentary across a $5.5B AUM commercial real estate portfolio, saving analysts 100+ hours per review cycle.</p><a href="#">View project ↗</a></li>
@@ -364,6 +372,7 @@
               <p class="xp-when">[Years]</p>
             </li>
           </ul>
+        </div>
         </div>
         <div class="socials">
           <span class="socials-label">Reach out</span>
