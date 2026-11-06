@@ -128,6 +128,9 @@
     .portrait { width: 110px; }
   }
   .end { padding-bottom: 10vh; }
+  /* About and Life sit close under the first box instead of a full screen apart */
+  #about { min-height: 0; padding-top: 6vh; padding-bottom: 6vh; }
+  #trailhead { min-height: 0; padding-top: 0; }
   .end h2 { font-size: clamp(30px, 4vw, 44px); margin-bottom: 24px; }
   /* Toggle buttons: Writing / Projects / Sports / Research */
   .tabs { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -159,6 +162,25 @@
     .tab { padding: 7px 12px; font-size: 12px; }
   }
   .pics img.missing { display: none; } /* photos you haven't uploaded yet stay hidden */
+  /* Experience + Community rows: logo | role and organization | dates, with thin lines between */
+  .xp-group { margin: 24px 0 0; padding: 12px 0; border-top: 1px solid rgba(31, 36, 32, 0.2); font-family: Inter, sans-serif; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: #6b6f6b; }
+  .panel .xp-list { margin-top: 0; gap: 0; }
+  .entry.xp { display: grid; grid-template-columns: 64px 1fr auto; gap: 20px; align-items: start; padding: 22px 0; border-top: 1px solid rgba(31, 36, 32, 0.2); }
+  .xp-logo { width: 64px; height: 64px; display: grid; place-items: center; }
+  .xp-logo img { width: 64px; height: 64px; object-fit: cover; border-radius: 6px; }
+  .xp-ph { width: 64px; height: 64px; display: grid; place-items: center; border-radius: 6px; background: rgba(31, 36, 32, 0.06); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #9a9d99; }
+  .xp-main { min-width: 0; }
+  .entry .xp-role { font-family: Inter, sans-serif; font-size: 19px; font-weight: 500; line-height: 1.3; color: var(--ink); }
+  .entry .xp-org { font-size: 16px; line-height: 1.4; color: #6b6f6b; margin-top: 2px; }
+  .entry .xp-desc { font-size: 15px; line-height: 1.55; color: #4c504c; margin-top: 10px; }
+  .xp .bullets { font-size: 15px; color: #4c504c; margin-top: 10px; }
+  .entry .xp-when { font-size: 15px; color: #6b6f6b; white-space: nowrap; margin-top: 2px; }
+  @media (max-width: 720px) {
+    .entry.xp { grid-template-columns: 48px 1fr; gap: 4px 14px; }
+    .xp-logo, .xp-logo img, .xp-ph { width: 48px; height: 48px; }
+    .entry .xp-when { grid-column: 2; grid-row: 1; justify-self: end; font-size: 13px; }
+    .xp-main { grid-column: 1 / -1; }
+  }
   /* Socials: a quieter row at the very bottom */
   .socials { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px 20px; margin-top: 36px; padding-top: 18px; border-top: 1px solid rgba(31, 36, 32, 0.25); font-family: var(--mono); font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; }
   .socials-label { opacity: 0.6; min-width: 90px; }
@@ -243,7 +265,7 @@
         <h2>Life</h2>
         <div class="tabs" role="tablist" aria-label="Life">
           <button class="tab" role="tab" id="tab-projects" aria-controls="panel-projects" aria-selected="true">Projects</button>
-          <button class="tab" role="tab" id="tab-writing" aria-controls="panel-writing" aria-selected="false" tabindex="-1">Experience</button>
+          <button class="tab" role="tab" id="tab-experience" aria-controls="panel-experience" aria-selected="false" tabindex="-1">Experience</button>
           <button class="tab" role="tab" id="tab-research" aria-controls="panel-research" aria-selected="false" tabindex="-1">Research</button>
           <button class="tab" role="tab" id="tab-writing" aria-controls="panel-writing" aria-selected="false" tabindex="-1">Writing</button>
           <button class="tab" role="tab" id="tab-community" aria-controls="panel-community" aria-selected="false" tabindex="-1">Community</button>
@@ -257,6 +279,27 @@
             <li class="entry"><p><b>Loan Review Agent:</b> an AI agent I built in Python for the asset management team at ACM Advisors. It writes loan performance commentary across a $5.5B AUM commercial real estate portfolio, saving analysts 100+ hours per review cycle.</p><a href="#">View project ↗</a></li>
           </ul>
         </div>
+        <div class="panel" id="panel-experience" role="tabpanel" aria-labelledby="tab-experience" hidden>
+          <p class="xp-group">Professional</p>
+          <ul class="entries xp-list">
+            <li class="entry xp">
+              <div class="xp-logo"><span class="xp-ph">Logo</span></div>
+              <div class="xp-main">
+                <p class="xp-role">[Role]</p>
+                <p class="xp-org">[Organization]</p>
+              </div>
+              <p class="xp-when">[2025 – Present]</p>
+            </li>
+            <li class="entry xp">
+              <div class="xp-logo"><span class="xp-ph">Logo</span></div>
+              <div class="xp-main">
+                <p class="xp-role">[Role]</p>
+                <p class="xp-org">[Organization]</p>
+              </div>
+              <p class="xp-when">[2024]</p>
+            </li>
+          </ul>
+        </div>
         <div class="panel" id="panel-research" role="tabpanel" aria-labelledby="tab-research" hidden>
           <ul class="entries">
             <li class="entry"><p>I work with Professor Andrew Maxwell at York's Lassonde School of Engineering on research around technology, innovation, and commercialization, published through the Innovation Doctor Substack.</p><p>I'm also helping turn an Innovation &amp; Creativity course into an online format for an AI learning platform.</p><a href="#">Innovation Doctor Substack ↗</a></li>
@@ -268,23 +311,57 @@
           </ul>
         </div>
         <div class="panel" id="panel-community" role="tabpanel" aria-labelledby="tab-community" hidden>
-          <ul class="entries">
-            <li class="entry side-pic">
-              <div class="side-text">
-                <p><b>York University Varsity Field Hockey (2024-Present)</b></p>
+          <p class="xp-group">Community</p>
+          <ul class="entries xp-list">
+            <li class="entry xp">
+              <div class="xp-logo"><img src="hockey-champions.webp" alt="York field hockey team, 2025 U SPORTS champions"></div>
+              <div class="xp-main">
+                <p class="xp-role">Varsity Field Hockey</p>
+                <p class="xp-org">York University</p>
                 <ul class="bullets">
                   <li>U SPORTS (Gold, Silver) and OUA (Gold, Silver, Bronze) medalist</li>
                   <li>Previously on the Canadian U18 National Team member</li>
                 </ul>
               </div>
-              <img class="side-img" src="hockey-champions.webp" alt="York field hockey team, 2025 U SPORTS champions">
+              <p class="xp-when">2024 – Present</p>
             </li>
-            <li class="entry"><p><b>Bags of Promise, Chapter Vice President:</b> I lead fundraising for youth experiencing homelessness and run the club's operations and volunteers.</p><a href="#" target="_blank" rel="noopener">Bags of Promise ↗</a></li>
-            <li class="entry"><p><b>Sport Council at York:</b> I coordinate internal York University and Varsity Athletics events.</p></li>
-            <li class="entry"><p><b>Student-athlete mentoring:</b> I mentor first-year student-athletes through weekly meetings as they settle into varsity sport and university.</p></li>
-            <li class="entry">
-              <p><b>HopOn North Vancouver:</b> co-launched an after-school mountain biking program for girls with Cycling BC, focused on confidence, resilience, and being a good teammate.</p>
-              <div class="entry-links"><a href="#">Read the recap ↗</a></div>
+            <li class="entry xp">
+              <div class="xp-logo"><span class="xp-ph">Logo</span></div>
+              <div class="xp-main">
+                <p class="xp-role">Chapter Vice President</p>
+                <p class="xp-org">Bags of Promise</p>
+                <p class="xp-desc">I lead fundraising for youth experiencing homelessness and run the club's operations and volunteers.</p>
+                <a href="#" target="_blank" rel="noopener">Bags of Promise ↗</a>
+              </div>
+              <p class="xp-when">[Years]</p>
+            </li>
+            <li class="entry xp">
+              <div class="xp-logo"><span class="xp-ph">Logo</span></div>
+              <div class="xp-main">
+                <p class="xp-role">Sport Council</p>
+                <p class="xp-org">York University</p>
+                <p class="xp-desc">I coordinate internal York University and Varsity Athletics events.</p>
+              </div>
+              <p class="xp-when">[Years]</p>
+            </li>
+            <li class="entry xp">
+              <div class="xp-logo"><span class="xp-ph">Logo</span></div>
+              <div class="xp-main">
+                <p class="xp-role">Student-Athlete Mentor</p>
+                <p class="xp-org">York University</p>
+                <p class="xp-desc">I mentor first-year student-athletes through weekly meetings as they settle into varsity sport and university.</p>
+              </div>
+              <p class="xp-when">[Years]</p>
+            </li>
+            <li class="entry xp">
+              <div class="xp-logo"><span class="xp-ph">Logo</span></div>
+              <div class="xp-main">
+                <p class="xp-role">HopOn North Vancouver</p>
+                <p class="xp-org">with Cycling BC</p>
+                <p class="xp-desc">Co-launched an after-school mountain biking program for girls, focused on confidence, resilience, and being a good teammate.</p>
+                <div class="entry-links"><a href="#">Read the recap ↗</a></div>
+              </div>
+              <p class="xp-when">[Years]</p>
             </li>
           </ul>
         </div>
