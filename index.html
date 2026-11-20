@@ -181,13 +181,29 @@
   .entry .xp-role { font-family: Inter, sans-serif; font-size: 19px; font-weight: 500; line-height: 1.3; color: var(--ink); }
   .entry .xp-org { font-size: 16px; line-height: 1.4; color: #6b6f6b; margin-top: 2px; }
   .entry .xp-desc { font-size: 15px; line-height: 1.55; color: #4c504c; margin-top: 10px; }
-  .xp .bullets { font-size: 15px; color: #4c504c; margin-top: 10px; }
+  .xp .bullets, .cm .bullets { font-size: 15px; color: #4c504c; margin-top: 10px; }
   .entry .xp-when { font-size: 15px; color: #6b6f6b; white-space: nowrap; margin-top: 2px; }
   @media (max-width: 720px) {
     .entry.xp { grid-template-columns: 48px 1fr; gap: 4px 14px; }
     .xp-logo, .xp-logo img, .xp-ph { width: 48px; height: 48px; }
     .entry .xp-when { grid-column: 2; grid-row: 1; justify-self: end; font-size: 13px; }
     .xp-main { grid-column: 1 / -1; }
+  }
+  /* Community rows: text on the left; dates and a photo on the right */
+  .entry.cm { display: grid; grid-template-columns: 1fr 150px; gap: 24px; align-items: start; padding: 22px 0; border-top: 1px solid rgba(31, 36, 32, 0.2); }
+  .cm-main { min-width: 0; }
+  .cm-side { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+  .cm-pic, .cm-pic img, .cm-pic .xp-ph { width: 150px; height: 112px; }
+  .cm-pic img { display: block; object-fit: cover; border-radius: 6px; }
+  /* Writing: article titles */
+  .entries.articles { margin-top: 0; gap: 0; }
+  .entry.article { padding: 18px 0; border-top: 1px solid rgba(31, 36, 32, 0.2); }
+  .entry .article-title { font-size: 19px; font-weight: 500; line-height: 1.3; }
+  .entry .article-sum { font-size: 15px; line-height: 1.55; color: #4c504c; margin-top: 4px; }
+  @media (max-width: 720px) {
+    .entry.cm { grid-template-columns: 1fr 96px; gap: 14px; }
+    .cm-pic, .cm-pic img, .cm-pic .xp-ph { width: 96px; height: 72px; }
+    .cm-side .xp-when { white-space: normal; text-align: right; font-size: 12px; line-height: 1.35; }
   }
   /* Socials: a quieter row at the very bottom */
   .socials { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px 20px; margin-top: 36px; padding-top: 18px; border-top: 1px solid rgba(31, 36, 32, 0.25); font-family: var(--mono); font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; }
@@ -286,8 +302,8 @@
         <div class="panel" id="panel-projects" role="tabpanel" aria-labelledby="tab-projects">
           <ul class="entries">
             <li class="entry"><p><b>Loan Review Agent:</b> Built an AI agent in Python for the Asset Management team at ACM Advisors. It writes loan performance commentary across a $5.5B AUM commercial real estate portfolio, saving analysts 100+ hours per review cycle.</p></li>
-            <li class="entry"><p><b>The AI Money Web:</b> An interactive map of the money flowing between the companies building AI: chip deals, equity stakes, cloud contracts and debt. An AI research task drafts updates from the week's news and SEC filings, Python scripts check them, and I review them before they go live. Built with D3.js.</p><div class="entry-links"><a href="https://tessa-wang.github.io/ai-debt/" target="_blank" rel="noopener">View project ↗</a><a href="https://github.com/tessa-wang/ai-debt" target="_blank" rel="noopener">Code ↗</a></div></li>
-            <li class="entry"><p><b>Word of the Day:</b> An app for my friends, because I like asking people what one word describes their day. Everyone posts one word a day and sees each other's. Built with Next.js and Supabase.</p><div class="entry-links"><a href="https://wotd-rho.vercel.app" target="_blank" rel="noopener">View project ↗</a><a href="https://github.com/tessa-wang/WOTD" target="_blank" rel="noopener">Code ↗</a></div></li>
+            <li class="entry"><p><b>The AI Money Web:</b> An interactive map of the money flowing between the companies building AI: chip deals, equity stakes, cloud contracts and debt. An AI research task drafts updates from the week's news and SEC filings, Python scripts check them, and I review them before they go live. Built with D3.js.</p><div class="entry-links"><a href="https://tessa-wang.github.io/ai-debt/" target="_blank" rel="noopener">View project ↗</a></div></li>
+            <li class="entry"><p><b>Word of the Day:</b> An app for my friends, because I like asking people what one word describes their day. Everyone posts one word a day and sees each other's. Built with Next.js and Supabase.</p><div class="entry-links"><a href="https://wotd-rho.vercel.app" target="_blank" rel="noopener">View project ↗</a></div></li>
           </ul>
         </div>
         <div class="panel" id="panel-experience" role="tabpanel" aria-labelledby="tab-experience" hidden>
@@ -296,18 +312,38 @@
             <li class="entry xp">
               <div class="xp-logo"><span class="xp-ph">Logo</span></div>
               <div class="xp-main">
-                <p class="xp-role">[Role]</p>
-                <p class="xp-org">[Organization]</p>
+                <p class="xp-role">Real Estate Summer Analyst</p>
+                <p class="xp-org">ACM Advisors Ltd. · Toronto</p>
+                <ul class="bullets">
+                  <li>Built an AI loan review agent in Python that automated commentary across a $5.5B AUM commercial real estate portfolio, saving analysts 100+ hours per review cycle</li>
+                  <li>Supported underwriting and valuation on ~10 commercial real estate deals, including a refinancing: pro formas, property financials, borrower data and market trends</li>
+                </ul>
               </div>
-              <p class="xp-when">[2025 – Present]</p>
+              <p class="xp-when">May – Aug 2026</p>
             </li>
             <li class="entry xp">
               <div class="xp-logo"><span class="xp-ph">Logo</span></div>
               <div class="xp-main">
-                <p class="xp-role">[Role]</p>
-                <p class="xp-org">[Organization]</p>
+                <p class="xp-role">Sales and Marketing Support Intern</p>
+                <p class="xp-org">Freedom Marine International Yacht Sales · Vancouver</p>
+                <ul class="bullets">
+                  <li>Implemented and maintained HubSpot CRM workflows and sales pipelines, managing ~30k leads and opportunities and improving broker follow-up</li>
+                  <li>Produced 50+ listings, videos and social posts, and supported a major boat show attended by 200+ clients and prospects</li>
+                </ul>
               </div>
-              <p class="xp-when">[2024]</p>
+              <p class="xp-when">May – Aug 2025</p>
+            </li>
+            <li class="entry xp">
+              <div class="xp-logo"><span class="xp-ph">Logo</span></div>
+              <div class="xp-main">
+                <p class="xp-role">Royalty Accounting Assistant</p>
+                <p class="xp-org">Loud Crow Interactive · Vancouver</p>
+                <ul class="bullets">
+                  <li>Prepared royalty statements in QuickBooks for licensors of a children’s interactive app company, including Peanuts Worldwide and Sandra Boynton</li>
+                  <li>Built an Excel model to convert foreign-currency royalties for international payments</li>
+                </ul>
+              </div>
+              <p class="xp-when">2018 – 2024</p>
             </li>
           </ul>
         </div>
@@ -320,59 +356,77 @@
           <ul class="entries">
             <li class="entry"><p>I enjoy learning and writing about business, technology, psychology, and other topics.</p><p>Right now, I'm very interested in learning about the conduit financing happening between the neoclouds and frontier labs, and its long-term effects on the broader economy.</p><a href="#">Tessa's Substack ↗</a></li>
           </ul>
+          <!-- ARTICLES: one block per article. Put the article's address in href="..." -->
+          <p class="xp-group">Articles</p>
+          <ul class="entries articles">
+            <li class="entry article">
+              <p class="article-title">[Article title]</p>
+              <p class="article-sum">[One line on what the article is about.]</p>
+              <a href="#" target="_blank" rel="noopener">Read on Substack ↗</a>
+            </li>
+            <li class="entry article">
+              <p class="article-title">[Article title]</p>
+              <p class="article-sum">[One line on what the article is about.]</p>
+              <a href="#" target="_blank" rel="noopener">Read on Substack ↗</a>
+            </li>
+            <li class="entry article">
+              <p class="article-title">[Article title]</p>
+              <p class="article-sum">[One line on what the article is about.]</p>
+              <a href="#" target="_blank" rel="noopener">Read on Substack ↗</a>
+            </li>
+          </ul>
         </div>
         <div class="panel" id="panel-community" role="tabpanel" aria-labelledby="tab-community" hidden>
           <p class="xp-group">Community</p>
           <ul class="entries xp-list">
-            <li class="entry xp">
-              <div class="xp-logo"><img src="hockey-champions.webp" alt="York field hockey team, 2025 U SPORTS champions"></div>
-              <div class="xp-main">
+            <li class="entry cm">
+              <div class="cm-main">
                 <p class="xp-role">Varsity Field Hockey</p>
                 <p class="xp-org">York University</p>
                 <ul class="bullets">
                   <li>U SPORTS (Gold, Silver) and OUA (Gold, Silver, Bronze) medalist</li>
-                  <li>Previously on the Canadian U18 National Team member</li>
+                  <li>Previously on the Canadian U18 National Team</li>
                 </ul>
               </div>
-              <p class="xp-when">2024 – Present</p>
+              <div class="cm-side">
+                <p class="xp-when">Sep 2024 – Present</p>
+                <div class="cm-pic"><img src="hockey-champions.webp" alt="York field hockey team, 2025 U SPORTS champions"></div>
+              </div>
             </li>
-            <li class="entry xp">
-              <div class="xp-logo"><span class="xp-ph">Logo</span></div>
-              <div class="xp-main">
-                <p class="xp-role">Chapter Vice President</p>
-                <p class="xp-org">Bags of Promise</p>
-                <p class="xp-desc">I lead fundraising for youth experiencing homelessness and run the club's operations and volunteers.</p>
+            <li class="entry cm">
+              <div class="cm-main">
+                <p class="xp-role">Vice President</p>
+                <p class="xp-org">Bags of Promise at York University</p>
+                <p class="xp-desc">I manage fundraising for youth experiencing homelessness, with $2,500+ raised and 20+ volunteers coordinated, and run executive meetings.</p>
                 <a href="#" target="_blank" rel="noopener">Bags of Promise ↗</a>
               </div>
-              <p class="xp-when">[Years]</p>
-            </li>
-            <li class="entry xp">
-              <div class="xp-logo"><span class="xp-ph">Logo</span></div>
-              <div class="xp-main">
-                <p class="xp-role">Sport Council</p>
-                <p class="xp-org">York University</p>
-                <p class="xp-desc">I coordinate internal York University and Varsity Athletics events.</p>
+              <div class="cm-side">
+                <p class="xp-when">Sep 2025 – Present</p>
+                <div class="cm-pic"><span class="xp-ph">Photo</span></div>
               </div>
-              <p class="xp-when">[Years]</p>
             </li>
-            <li class="entry xp">
-              <div class="xp-logo"><span class="xp-ph">Logo</span></div>
-              <div class="xp-main">
-                <p class="xp-role">Student-Athlete Mentor</p>
-                <p class="xp-org">York University</p>
-                <p class="xp-desc">I mentor first-year student-athletes through weekly meetings as they settle into varsity sport and university.</p>
+            <li class="entry cm">
+              <div class="cm-main">
+                <p class="xp-role">Internal Events Coordinator &amp; Mentor</p>
+                <p class="xp-org">Sport Council at York University</p>
+                <p class="xp-desc">I coordinate internal York and Varsity Athletics events for 450+ student-athletes, develop community outreach for Varsity Athletics, and mentor first-year student-athletes through weekly meetings.</p>
               </div>
-              <p class="xp-when">[Years]</p>
+              <div class="cm-side">
+                <p class="xp-when">Mar 2025 – Present</p>
+                <div class="cm-pic"><span class="xp-ph">Photo</span></div>
+              </div>
             </li>
-            <li class="entry xp">
-              <div class="xp-logo"><span class="xp-ph">Logo</span></div>
-              <div class="xp-main">
+            <li class="entry cm">
+              <div class="cm-main">
                 <p class="xp-role">HopOn North Vancouver</p>
                 <p class="xp-org">with Cycling BC</p>
                 <p class="xp-desc">Co-launched an after-school mountain biking program for girls, focused on confidence, resilience, and being a good teammate.</p>
                 <div class="entry-links"><a href="#">Read the recap ↗</a></div>
               </div>
-              <p class="xp-when">[Years]</p>
+              <div class="cm-side">
+                <p class="xp-when">[Years]</p>
+                <div class="cm-pic"><span class="xp-ph">Photo</span></div>
+              </div>
             </li>
           </ul>
         </div>
