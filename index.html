@@ -171,8 +171,10 @@
   }
   .pics img.missing { display: none; } /* photos you haven't uploaded yet stay hidden */
   /* Experience + Community rows: logo | role and organization | dates, with thin lines between */
+  h3.xp-group { font-weight: 400; line-height: 1.7; word-spacing: normal; }
   .xp-group { margin: 24px 0 0; padding: 12px 0; border-top: 1px solid rgba(31, 36, 32, 0.2); font-family: Inter, sans-serif; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: #6b6f6b; }
   .panel .xp-list { margin-top: 0; gap: 0; }
+  .panel > .xp-list:first-child { margin-top: 24px; } /* tabs with no small heading on top */
   .entry.xp { display: grid; grid-template-columns: 64px 1fr auto; gap: 20px; align-items: start; padding: 22px 0; border-top: 1px solid rgba(31, 36, 32, 0.2); }
   .xp-logo { width: 64px; height: 64px; display: grid; place-items: center; }
   .xp-logo img { width: 64px; height: 64px; object-fit: cover; border-radius: 6px; }
@@ -195,11 +197,28 @@
   .cm-side { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
   .cm-pic, .cm-pic img, .cm-pic .xp-ph { width: 150px; height: 112px; }
   .cm-pic img { display: block; object-fit: cover; border-radius: 6px; }
+  /* Community: one-line coaching entries (role · organization, dates on the right) */
+  .entry.cm-line { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 16px 0; border-top: 1px solid rgba(31, 36, 32, 0.2); }
+  .entry.cm-line .xp-role { font-size: 17px; }
+  .entry.cm-line .xp-org { font-size: 15px; }
+  .entry.cm-line p { line-height: 1.4; }
+  /* Community: two-up photo grid (one column on phones) */
+  .photo-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 8px; padding-top: 22px; border-top: 1px solid rgba(31, 36, 32, 0.2); }
+  .grid-pic { margin: 0; }
+  .grid-frame { position: relative; aspect-ratio: 4 / 3; border-radius: 6px; overflow: hidden; }
+  .grid-frame .xp-ph { position: absolute; inset: 0; width: auto; height: auto; padding: 12px; text-align: center; }
+  .grid-frame img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; }
+  .photo-grid img.missing { display: none; } /* until the photo is uploaded, the grey box shows */
+  .grid-pic figcaption { margin-top: 8px; font-size: 13px; color: #6b6f6b; }
+  @media (max-width: 720px) {
+    .photo-grid { grid-template-columns: 1fr; }
+    .entry.cm-line { flex-wrap: wrap; gap: 2px 12px; }
+    .entry.cm-line .xp-when { white-space: normal; }
+  }
   /* Writing: article titles */
   .entries.articles { margin-top: 0; gap: 0; }
   .entry.article { padding: 18px 0; border-top: 1px solid rgba(31, 36, 32, 0.2); }
   .entry .article-title { font-size: 19px; font-weight: 500; line-height: 1.3; }
-  .entry .article-sum { font-size: 15px; line-height: 1.55; color: #4c504c; margin-top: 4px; }
   @media (max-width: 720px) {
     .entry.cm { grid-template-columns: 1fr 96px; gap: 14px; }
     .cm-pic, .cm-pic img, .cm-pic .xp-ph { width: 96px; height: 72px; }
@@ -292,7 +311,8 @@
           <button class="tab" role="tab" id="tab-experience" aria-controls="panel-experience" aria-selected="false" tabindex="-1">Experience</button>
           <button class="tab" role="tab" id="tab-research" aria-controls="panel-research" aria-selected="false" tabindex="-1">Research</button>
           <button class="tab" role="tab" id="tab-writing" aria-controls="panel-writing" aria-selected="false" tabindex="-1">Writing</button>
-          <button class="tab" role="tab" id="tab-community" aria-controls="panel-community" aria-selected="false" tabindex="-1">Community</button>
+          <button class="tab" role="tab" id="tab-now" aria-controls="panel-now" aria-selected="false" tabindex="-1">What I’m doing now</button>
+          <button class="tab" role="tab" id="tab-started" aria-controls="panel-started" aria-selected="false" tabindex="-1">Where I started</button>
         </div>
         <!--
           Each entry is a line or two of text and a link.
@@ -310,15 +330,15 @@
           <p class="xp-group">Professional</p>
           <ul class="entries xp-list">
             <li class="entry xp">
-              <div class="xp-logo"><span class="xp-ph">Logo</span></div>
+              <div class="xp-logo"><img src="images/logo-acm.webp" alt="ACM Advisors logo" loading="lazy"></div>
               <div class="xp-main">
-                <p class="xp-role">Real Estate Summer Analyst</p>
+                <p class="xp-role">Real Estate Analyst</p>
                 <p class="xp-org">ACM Advisors Ltd. · Toronto</p>
               </div>
               <p class="xp-when">May – Aug 2026</p>
             </li>
             <li class="entry xp">
-              <div class="xp-logo"><span class="xp-ph">Logo</span></div>
+              <div class="xp-logo"><img src="images/logo-freedom-marine.webp" alt="Freedom Marine logo" loading="lazy"></div>
               <div class="xp-main">
                 <p class="xp-role">Sales and Marketing Support Intern</p>
                 <p class="xp-org">Freedom Marine International Yacht Sales · Vancouver</p>
@@ -326,46 +346,38 @@
               <p class="xp-when">May – Aug 2025</p>
             </li>
             <li class="entry xp">
-              <div class="xp-logo"><span class="xp-ph">Logo</span></div>
+              <div class="xp-logo"><img src="images/logo-loud-crow.webp" alt="Loud Crow Interactive logo" loading="lazy"></div>
               <div class="xp-main">
                 <p class="xp-role">Royalty Accounting Assistant</p>
                 <p class="xp-org">Loud Crow Interactive · Vancouver</p>
               </div>
-              <p class="xp-when">2018 – 2024</p>
+              <p class="xp-when">Jun 2018 – Jun 2024</p>
             </li>
           </ul>
         </div>
         <div class="panel" id="panel-research" role="tabpanel" aria-labelledby="tab-research" hidden>
           <ul class="entries">
-            <li class="entry"><p>I work with Professor Andrew Maxwell at York's Lassonde School of Engineering on research around technology, innovation, and commercialization, published through the Innovation Doctor Substack.</p><p>I'm also helping turn an Innovation &amp; Creativity course into an online format for an AI learning platform.</p><a href="#">Innovation Doctor Substack ↗</a></li>
+            <li class="entry"><p>I work with Professor Andrew Maxwell at York's Lassonde School of Engineering on research around technology, innovation, and commercialization, published through the Innovation Doctor Substack.</p><p>I'm also helping turn an Innovation &amp; Creativity course into an online format for an AI learning platform.</p><a href="https://substack.com/@innovationdoctor" target="_blank" rel="noopener">Innovation Doctor Substack ↗</a></li>
           </ul>
         </div>
         <div class="panel" id="panel-writing" role="tabpanel" aria-labelledby="tab-writing" hidden>
           <ul class="entries">
-            <li class="entry"><p>I enjoy learning and writing about business, technology, psychology, and other topics.</p><a href="#">Tessa's Substack ↗</a></li>
+            <li class="entry"><p>I enjoy learning and writing about business, technology, psychology, and other topics.</p><a href="https://substack.com/@twang11" target="_blank" rel="noopener">Tessa's Substack ↗</a></li>
           </ul>
           <!-- ARTICLES: one block per article. Put the article's address in href="..." -->
           <p class="xp-group">Articles</p>
           <ul class="entries articles">
             <li class="entry article">
-              <p class="article-title">[Article title]</p>
-              <p class="article-sum">[One line on what the article is about.]</p>
-              <a href="#" target="_blank" rel="noopener">Read on Substack ↗</a>
+              <p class="article-title">I wanted to learn what this “AI” thing was about. So I read The Scaling Era.</p>
+              <a href="https://twang11.substack.com/p/i-wanted-to-learn-what-this-ai-thing" target="_blank" rel="noopener">Read on Substack ↗</a>
             </li>
             <li class="entry article">
-              <p class="article-title">[Article title]</p>
-              <p class="article-sum">[One line on what the article is about.]</p>
-              <a href="#" target="_blank" rel="noopener">Read on Substack ↗</a>
-            </li>
-            <li class="entry article">
-              <p class="article-title">[Article title]</p>
-              <p class="article-sum">[One line on what the article is about.]</p>
-              <a href="#" target="_blank" rel="noopener">Read on Substack ↗</a>
+              <p class="article-title">Why Being Busier Can Actually Make You More Productive</p>
+              <a href="https://twang11.substack.com/p/why-being-busier-can-actually-make" target="_blank" rel="noopener">Read on Substack ↗</a>
             </li>
           </ul>
         </div>
-        <div class="panel" id="panel-community" role="tabpanel" aria-labelledby="tab-community" hidden>
-          <p class="xp-group">Community</p>
+        <div class="panel" id="panel-now" role="tabpanel" aria-labelledby="tab-now" hidden>
           <ul class="entries xp-list">
             <li class="entry cm">
               <div class="cm-main">
@@ -378,7 +390,7 @@
               </div>
               <div class="cm-side">
                 <p class="xp-when">Sep 2024 – Present</p>
-                <div class="cm-pic"><img src="hockey-champions.webp" alt="York field hockey team, 2025 U SPORTS champions"></div>
+                <div class="cm-pic"><img src="hockey-champions.webp" alt="York field hockey team, 2025 U SPORTS champions" loading="lazy"></div>
               </div>
             </li>
             <li class="entry cm">
@@ -386,7 +398,7 @@
                 <p class="xp-role">Vice President</p>
                 <p class="xp-org">Bags of Promise at York University</p>
                 <p class="xp-desc">Student-led charity focused on supporting youth experiencing homelessness</p>
-                <a href="#" target="_blank" rel="noopener">Bags of Promise ↗</a>
+                <a href="https://www.bagsofpromise.org/" target="_blank" rel="noopener">Bags of Promise ↗</a>
               </div>
               <div class="cm-side">
                 <p class="xp-when">Sep 2025 – Present</p>
@@ -403,19 +415,47 @@
                 <div class="cm-pic"><span class="xp-ph">Photo</span></div>
               </div>
             </li>
+          </ul>
+        </div>
+        <div class="panel" id="panel-started" role="tabpanel" aria-labelledby="tab-started" hidden>
+          <ul class="entries xp-list">
             <li class="entry cm">
               <div class="cm-main">
                 <p class="xp-role">HopOn North Vancouver</p>
                 <p class="xp-org">with Cycling BC</p>
                 <p class="xp-desc">Co-launched an after-school mountain biking program for girls, focused on confidence, resilience, and being a good teammate.</p>
-                <div class="entry-links"><a href="#">Read the recap ↗</a></div>
+                <div class="entry-links"><a href="https://hopon.cyclingbc.net/2023/10/31/hopon-north-van-recap-2023/" target="_blank" rel="noopener">Read the recap ↗</a></div>
               </div>
               <div class="cm-side">
                 <p class="xp-when">2023 – 2024</p>
                 <div class="cm-pic"><span class="xp-ph">Photo</span></div>
               </div>
             </li>
+            <li class="entry cm-line">
+              <p><span class="xp-role">Ski Racing Coach</span> <span class="xp-org">· Grouse Mountain Tyee Ski Club</span></p>
+              <p class="xp-when">Dec 2021 – Apr 2024</p>
+            </li>
+            <li class="entry cm-line">
+              <p><span class="xp-role">Mountain Bike Instructor</span> <span class="xp-org">· Endless Biking</span></p>
+              <p class="xp-when">Jun 2021 – Jun 2023</p>
+            </li>
           </ul>
+          <!--
+            PHOTOS: put two photos in the images folder with exactly these names:
+              images/ski-racing.jpg and images/mountain-biking.jpg
+            Landscape, 1600 x 1200 px (4:3), under about 400 KB each.
+            Until they're uploaded, a grey "photo coming soon" box shows instead.
+          -->
+          <div class="photo-grid">
+            <figure class="grid-pic">
+              <div class="grid-frame"><span class="xp-ph">Ski racing photo coming soon</span><img src="images/ski-racing.jpg" alt="Ski racing at Grouse Mountain" width="1600" height="1200" loading="lazy" decoding="async"></div>
+              <figcaption>Ski racing · Grouse Mountain</figcaption>
+            </figure>
+            <figure class="grid-pic">
+              <div class="grid-frame"><span class="xp-ph">Mountain biking photo coming soon</span><img src="images/mountain-biking.jpg" alt="Mountain biking on a forest trail on the North Shore" width="1600" height="1200" loading="lazy" decoding="async"></div>
+              <figcaption>Mountain biking · North Shore</figcaption>
+            </figure>
+          </div>
         </div>
         </div>
         <div class="socials">
@@ -428,7 +468,7 @@
           <span class="socials-label">Other</span>
           <a href="https://github.com/tessa-wang/" target="_blank" rel="noopener">GitHub</a>
           <a href="#" class="placeholder">Resume</a>
-          <a href="#" target="_blank" rel="noopener">Substack</a>
+          <a href="https://substack.com/@twang11" target="_blank" rel="noopener">Substack</a>
         </div>
       </div>
     </section>
@@ -455,7 +495,7 @@
 
 
   // Hide sports photos that haven't been uploaded yet (instead of showing a broken image)
-  Array.prototype.forEach.call(document.querySelectorAll('.pics img'), function (img) {
+  Array.prototype.forEach.call(document.querySelectorAll('.pics img, .photo-grid img'), function (img) {
     function missing() { img.classList.add('missing'); }
     if (img.complete && !img.naturalWidth) missing(); else img.addEventListener('error', missing);
   });
