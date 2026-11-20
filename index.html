@@ -174,6 +174,7 @@
   h3.xp-group { font-weight: 400; line-height: 1.7; word-spacing: normal; }
   .xp-group { margin: 24px 0 0; padding: 12px 0; border-top: 1px solid rgba(31, 36, 32, 0.2); font-family: Inter, sans-serif; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: #6b6f6b; }
   .panel .xp-list { margin-top: 0; gap: 0; }
+  .panel > .xp-list:first-child { margin-top: 24px; } /* tabs with no small heading on top */
   .entry.xp { display: grid; grid-template-columns: 64px 1fr auto; gap: 20px; align-items: start; padding: 22px 0; border-top: 1px solid rgba(31, 36, 32, 0.2); }
   .xp-logo { width: 64px; height: 64px; display: grid; place-items: center; }
   .xp-logo img { width: 64px; height: 64px; object-fit: cover; border-radius: 6px; }
@@ -311,7 +312,8 @@
           <button class="tab" role="tab" id="tab-experience" aria-controls="panel-experience" aria-selected="false" tabindex="-1">Experience</button>
           <button class="tab" role="tab" id="tab-research" aria-controls="panel-research" aria-selected="false" tabindex="-1">Research</button>
           <button class="tab" role="tab" id="tab-writing" aria-controls="panel-writing" aria-selected="false" tabindex="-1">Writing</button>
-          <button class="tab" role="tab" id="tab-community" aria-controls="panel-community" aria-selected="false" tabindex="-1">Community</button>
+          <button class="tab" role="tab" id="tab-now" aria-controls="panel-now" aria-selected="false" tabindex="-1">What I’m doing now</button>
+          <button class="tab" role="tab" id="tab-started" aria-controls="panel-started" aria-selected="false" tabindex="-1">Where I started</button>
         </div>
         <!--
           Each entry is a line or two of text and a link.
@@ -378,8 +380,7 @@
             </li>
           </ul>
         </div>
-        <div class="panel" id="panel-community" role="tabpanel" aria-labelledby="tab-community" hidden>
-          <h3 class="xp-group">What I’m doing now</h3>
+        <div class="panel" id="panel-now" role="tabpanel" aria-labelledby="tab-now" hidden>
           <ul class="entries xp-list">
             <li class="entry cm">
               <div class="cm-main">
@@ -417,6 +418,10 @@
                 <div class="cm-pic"><span class="xp-ph">Photo</span></div>
               </div>
             </li>
+          </ul>
+        </div>
+        <div class="panel" id="panel-started" role="tabpanel" aria-labelledby="tab-started" hidden>
+          <ul class="entries xp-list">
             <li class="entry cm">
               <div class="cm-main">
                 <p class="xp-role">HopOn North Vancouver</p>
@@ -429,9 +434,6 @@
                 <div class="cm-pic"><span class="xp-ph">Photo</span></div>
               </div>
             </li>
-          </ul>
-          <h3 class="xp-group">Where I started</h3>
-          <ul class="entries xp-list">
             <li class="entry cm-line">
               <p><span class="xp-role">Ski Racing Coach</span> <span class="xp-org">· Grouse Mountain Tyee Ski Club</span></p>
               <p class="xp-when">Dec 2021 – Apr 2024</p>
