@@ -114,6 +114,7 @@
   .entry .meta { font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.75; display: flex; justify-content: space-between; gap: 16px; margin-bottom: 6px; }
   .entry p { margin-top: 6px; }
   .entry a { font-family: var(--mono); font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; }
+  .entry p > a { font: inherit; text-transform: none; letter-spacing: normal; text-decoration: underline; text-underline-offset: 2px; } /* a link inside a sentence */
 
   /* ---------- Final card: soft light box with contact links ---------- */
   .card .col { background: rgba(244, 241, 232, 0.78); padding: 36px 40px; border-radius: 8px; text-shadow: none; }
@@ -139,7 +140,7 @@
   .panels { display: grid; }
   .panel { grid-area: 1 / 1; }
   .panel[hidden] { display: block; visibility: hidden; }
-  .end h2 { font-size: clamp(30px, 4vw, 44px); margin-bottom: 24px; }
+  .end h2 { margin-bottom: 24px; } /* same size as "About me" */
   /* Toggle buttons: Writing / Projects / Sports / Research */
   .tabs { display: flex; flex-wrap: wrap; gap: 8px; }
   .tab {
@@ -327,7 +328,7 @@
         <div class="panels">
         <div class="panel" id="panel-projects" role="tabpanel" aria-labelledby="tab-projects">
           <ul class="entries">
-            <li class="entry"><p><b>Loan Review Agent:</b> Built an AI agent in Python for the Asset Management team at ACM Advisors. It writes loan performance commentary across a $5.5B AUM commercial real estate portfolio</p></li>
+            <li class="entry"><p><b>Loan Review Agent:</b> Built an AI agent in Python for the Asset Management team at ACM Advisors. Designed to write loan performance commentary across a $5.5B AUM commercial real estate portfolio.</p></li>
             <li class="entry"><p><b>The AI Money Web:</b> An interactive map of the money flowing between the companies building AI: chip deals, equity stakes, cloud contracts and debt.</p><div class="entry-links"><a href="https://tessa-wang.github.io/ai-debt/" target="_blank" rel="noopener">View project ↗</a></div></li>
             <li class="entry"><p><b>Word of the Day:</b> An app for my friends, because I like asking people what one word describes their day. Everyone posts one word a day and sees each other's.</p><div class="entry-links"><a href="https://wotd-rho.vercel.app" target="_blank" rel="noopener">View project ↗</a></div></li>
           </ul>
@@ -363,12 +364,12 @@
         </div>
         <div class="panel" id="panel-research" role="tabpanel" aria-labelledby="tab-research" hidden>
           <ul class="entries">
-            <li class="entry"><p>I work with Professor Andrew Maxwell at York's Lassonde School of Engineering on research around technology, innovation, and commercialization, published through the Innovation Doctor Substack.</p><p>I'm also helping turn an Innovation &amp; Creativity course into an online format for an AI learning platform.</p><a href="https://substack.com/@innovationdoctor" target="_blank" rel="noopener">Innovation Doctor Substack ↗</a></li>
+            <li class="entry"><p>I work with Professor Andrew Maxwell at York's Lassonde School of Engineering on research around technology, innovation, and commercialization, published through the <a href="https://substack.com/@innovationdoctor" target="_blank" rel="noopener">Innovation Doctor Substack</a>.</p><p>I'm also helping turn an Innovation &amp; Creativity course into an online format for an AI learning platform.</p><a href="https://substack.com/@innovationdoctor" target="_blank" rel="noopener">Innovation Doctor Substack ↗</a></li>
           </ul>
         </div>
         <div class="panel" id="panel-writing" role="tabpanel" aria-labelledby="tab-writing" hidden>
           <ul class="entries">
-            <li class="entry"><p>I enjoy learning and writing about business, technology, psychology, and other topics.</p><a href="https://substack.com/@twang11" target="_blank" rel="noopener">Tessa's Substack ↗</a></li>
+            <li class="entry"><p>I enjoy writing about business, technology, psychology, and other topics.</p><a href="https://substack.com/@twang11" target="_blank" rel="noopener">Tessa's Substack ↗</a></li>
           </ul>
           <!-- ARTICLES: one block per article. Put the article's address in href="..." -->
           <p class="xp-group">Articles</p>
@@ -401,7 +402,7 @@
             </li>
             <li class="entry cm">
               <div class="cm-main">
-                <p class="xp-role">Vice President</p>
+                <p class="xp-role">Chapter Vice President</p>
                 <p class="xp-org">Bags of Promise at York University</p>
                 <p class="xp-desc">Student-led charity focused on supporting youth experiencing homelessness</p>
                 <a href="https://www.bagsofpromise.org/" target="_blank" rel="noopener">Bags of Promise ↗</a>
@@ -415,6 +416,10 @@
               <div class="cm-main">
                 <p class="xp-role">Internal Events Coordinator &amp; Mentor</p>
                 <p class="xp-org">Sport Council at York University</p>
+                <ul class="bullets">
+                  <li>Coordinate internal York and Varsity Athletics events for 450+ student-athletes</li>
+                  <li>Mentor first-year student-athletes through weekly meetings</li>
+                </ul>
               </div>
               <div class="cm-side">
                 <p class="xp-when">Mar 2025 – Present</p>
@@ -429,7 +434,7 @@
               <div class="cm-main">
                 <p class="xp-role">HopOn North Vancouver</p>
                 <p class="xp-org">with Cycling BC</p>
-                <p class="xp-desc">Co-launched an after-school mountain biking program for girls, focused on confidence, resilience, and being a good teammate.</p>
+                <p class="xp-desc">Co-launched a biking program for girls, focused on confidence, resilience, and teamwork.</p>
                 <div class="entry-links"><a href="https://hopon.cyclingbc.net/2023/10/31/hopon-north-van-recap-2023/" target="_blank" rel="noopener">Read the recap ↗</a></div>
               </div>
               <div class="cm-side">
@@ -474,7 +479,6 @@
           <span class="socials-label">Reach out</span>
           <a href="mailto:tessa@wangs.net">Email</a>
           <a href="https://www.linkedin.com/in/tessa-wang/" target="_blank" rel="noopener">LinkedIn</a>
-          <a href="https://x.com/YOUR-HANDLE" target="_blank" rel="noopener">X</a>
         </div>
         <div class="socials">
           <span class="socials-label">Other</span>
