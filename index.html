@@ -7,7 +7,7 @@
 <meta name="description" content="Tessa: from the peaks to the trailhead.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Inter+Tight:wght@700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --cream: #fbf6ea;
@@ -15,7 +15,7 @@
     --tag: #3d5a40;
     --wood: #9a5f35;
     --wood-dark: #6e4022;
-    --mono: "IBM Plex Mono", ui-monospace, monospace;
+    --mono: Inter, system-ui, sans-serif; /* small all-caps labels (was a typewriter font; now Inter like everything else) */
     --ease: cubic-bezier(0.16, 1, 0.3, 1);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -98,8 +98,8 @@
     padding: 6px 14px; transform: rotate(-1.5deg); margin-bottom: 28px;
     box-shadow: 0 2px 0 rgba(0, 0, 0, 0.08);
   }
-  /* All headings: bold, tightly spaced Inter Tight, with a little extra room between words */
-  h1, h2, h3 { font-family: "Inter Tight", Inter, sans-serif; font-weight: 700; letter-spacing: -0.04em; word-spacing: 0.08em; line-height: 1.1; }
+  /* All headings: bold, tightly spaced Inter, with a little extra room between words */
+  h1, h2, h3 { font-family: Inter, system-ui, sans-serif; font-weight: 700; letter-spacing: -0.04em; word-spacing: 0.08em; line-height: 1.1; }
   h1 { font-size: clamp(72px, 14vw, 180px); line-height: 0.95; letter-spacing: -0.03em; }
   h2 { font-size: clamp(36px, 5vw, 56px); margin-bottom: 28px; }
   h3 { font-size: 26px; }
