@@ -198,10 +198,13 @@
   .cm-pic, .cm-pic img, .cm-pic .xp-ph { width: 150px; height: 112px; }
   .cm-pic img { display: block; object-fit: cover; border-radius: 6px; }
   /* Community: one-line coaching entries (role · organization, dates on the right) */
-  .entry.cm-line { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 16px 0; border-top: 1px solid rgba(31, 36, 32, 0.2); }
+  .entry.cm-line { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; padding: 16px 0; border-top: 1px solid rgba(31, 36, 32, 0.2); }
   .entry.cm-line .xp-role { font-size: 17px; }
   .entry.cm-line .xp-org { font-size: 15px; }
   .entry.cm-line p { line-height: 1.4; }
+  .cm-line-main { min-width: 0; }
+  .entry.cm-line .xp-desc { line-height: 1.55; margin-top: 6px; }
+  .entry.cm-line .xp-when { margin-top: 1px; }
   /* Community: two-up photo grid (one column on phones) */
   .photo-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 8px; padding-top: 22px; border-top: 1px solid rgba(31, 36, 32, 0.2); }
   .grid-pic { margin: 0; }
@@ -432,11 +435,17 @@
               </div>
             </li>
             <li class="entry cm-line">
-              <p><span class="xp-role">Ski Racing Coach</span> <span class="xp-org">· Grouse Mountain Tyee Ski Club</span></p>
+              <div class="cm-line-main">
+                <p><span class="xp-role">Ski Racing Coach</span> <span class="xp-org">· Grouse Mountain Tyee Ski Club</span></p>
+                <p class="xp-desc placeholder">[A line or two about coaching young ski racers: who you coached and what you taught.]</p>
+              </div>
               <p class="xp-when">Dec 2021 – Apr 2024</p>
             </li>
             <li class="entry cm-line">
-              <p><span class="xp-role">Mountain Bike Instructor</span> <span class="xp-org">· Endless Biking</span></p>
+              <div class="cm-line-main">
+                <p><span class="xp-role">Mountain Bike Instructor</span> <span class="xp-org">· Endless Biking</span></p>
+                <p class="xp-desc placeholder">[A line or two about teaching mountain biking: who you taught and what you taught them.]</p>
+              </div>
               <p class="xp-when">Jun 2021 – Jun 2023</p>
             </li>
           </ul>
