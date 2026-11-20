@@ -7,3 +7,5 @@ Upload these two photos into this folder, with exactly these names:
 
 Size: landscape, 1600 x 1200 px (4:3), under about 400 KB each.
 Photos with a different shape still work; they're cropped to 4:3 from the centre.
+
+The `logo-*.webp` files are the company logos used in the Experience tab.
