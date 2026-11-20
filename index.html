@@ -176,6 +176,7 @@
   .xp-group { margin: 24px 0 0; padding: 12px 0; border-top: 1px solid rgba(31, 36, 32, 0.2); font-family: Inter, sans-serif; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: #6b6f6b; }
   .panel .xp-list { margin-top: 0; gap: 0; }
   .panel > .xp-list:first-child { margin-top: 24px; } /* tabs with no small heading on top */
+  .panel .entries.story { margin-bottom: 22px; } /* gap between the "Where I started" story and the entries */
   .entry.xp { display: grid; grid-template-columns: 64px 1fr auto; gap: 20px; align-items: start; padding: 22px 0; border-top: 1px solid rgba(31, 36, 32, 0.2); }
   .xp-logo { width: 64px; height: 64px; display: grid; place-items: center; }
   .xp-logo img { width: 64px; height: 64px; object-fit: cover; border-radius: 6px; }
@@ -429,6 +430,9 @@
           </ul>
         </div>
         <div class="panel" id="panel-started" role="tabpanel" aria-labelledby="tab-started" hidden>
+          <ul class="entries story">
+            <li class="entry"><p>I ski raced with the Grouse Mountain Tyee Ski Club for ten years, from 2012 to 2022, and won the U14 women’s slalom at the 2020 Teck Enquist Slalom along the way. Racing taught me a growth mindset: you lose a lot more often than you win, so you learn to keep getting a little better. After racing, I coached the club’s U10 athletes, then switched to freestyle in 2023. (Yes, I can do a backflip on skis.)</p><p>Mountain biking came later. My friends got me into it during COVID, and it turned into downhill and enduro racing and coaching summer camps at Endless Biking, which is where I met my HopOn co-founder.</p></li>
+          </ul>
           <ul class="entries xp-list">
             <li class="entry cm">
               <div class="cm-main">
@@ -445,14 +449,14 @@
             <li class="entry cm-line">
               <div class="cm-line-main">
                 <p><span class="xp-role">Ski Racing Coach</span> <span class="xp-org">· Grouse Mountain Tyee Ski Club</span></p>
-                <p class="xp-desc placeholder">[A line or two about coaching young ski racers: who you coached and what you taught.]</p>
+                <p class="xp-desc">Coached U10 ski racers and led the team at races, teaching young athletes the fundamentals of ski racing.</p>
               </div>
               <p class="xp-when">Dec 2021 – Apr 2024</p>
             </li>
             <li class="entry cm-line">
               <div class="cm-line-main">
                 <p><span class="xp-role">Mountain Bike Instructor</span> <span class="xp-org">· Endless Biking</span></p>
-                <p class="xp-desc placeholder">[A line or two about teaching mountain biking: who you taught and what you taught them.]</p>
+                <p class="xp-desc">Taught summer camps on the fundamentals of mountain biking, from braking to cornering, while racing downhill and enduro myself.</p>
               </div>
               <p class="xp-when">Jun 2021 – Jun 2023</p>
             </li>
