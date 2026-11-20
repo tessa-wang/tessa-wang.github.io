@@ -171,6 +171,7 @@
   }
   .pics img.missing { display: none; } /* photos you haven't uploaded yet stay hidden */
   /* Experience + Community rows: logo | role and organization | dates, with thin lines between */
+  h3.xp-group { font-weight: 400; line-height: 1.7; word-spacing: normal; }
   .xp-group { margin: 24px 0 0; padding: 12px 0; border-top: 1px solid rgba(31, 36, 32, 0.2); font-family: Inter, sans-serif; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: #6b6f6b; }
   .panel .xp-list { margin-top: 0; gap: 0; }
   .entry.xp { display: grid; grid-template-columns: 64px 1fr auto; gap: 20px; align-items: start; padding: 22px 0; border-top: 1px solid rgba(31, 36, 32, 0.2); }
@@ -195,6 +196,24 @@
   .cm-side { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
   .cm-pic, .cm-pic img, .cm-pic .xp-ph { width: 150px; height: 112px; }
   .cm-pic img { display: block; object-fit: cover; border-radius: 6px; }
+  /* Community: one-line coaching entries (role · organization, dates on the right) */
+  .entry.cm-line { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 16px 0; border-top: 1px solid rgba(31, 36, 32, 0.2); }
+  .entry.cm-line .xp-role { font-size: 17px; }
+  .entry.cm-line .xp-org { font-size: 15px; }
+  .entry.cm-line p { line-height: 1.4; }
+  /* Community: two-up photo grid (one column on phones) */
+  .photo-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 8px; padding-top: 22px; border-top: 1px solid rgba(31, 36, 32, 0.2); }
+  .grid-pic { margin: 0; }
+  .grid-frame { position: relative; aspect-ratio: 4 / 3; border-radius: 6px; overflow: hidden; }
+  .grid-frame .xp-ph { position: absolute; inset: 0; width: auto; height: auto; padding: 12px; text-align: center; }
+  .grid-frame img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; }
+  .photo-grid img.missing { display: none; } /* until the photo is uploaded, the grey box shows */
+  .grid-pic figcaption { margin-top: 8px; font-size: 13px; color: #6b6f6b; }
+  @media (max-width: 720px) {
+    .photo-grid { grid-template-columns: 1fr; }
+    .entry.cm-line { flex-wrap: wrap; gap: 2px 12px; }
+    .entry.cm-line .xp-when { white-space: normal; }
+  }
   /* Writing: article titles */
   .entries.articles { margin-top: 0; gap: 0; }
   .entry.article { padding: 18px 0; border-top: 1px solid rgba(31, 36, 32, 0.2); }
@@ -365,22 +384,8 @@
           </ul>
         </div>
         <div class="panel" id="panel-community" role="tabpanel" aria-labelledby="tab-community" hidden>
-          <p class="xp-group">Community</p>
+          <h3 class="xp-group">Leadership</h3>
           <ul class="entries xp-list">
-            <li class="entry cm">
-              <div class="cm-main">
-                <p class="xp-role">Varsity Field Hockey</p>
-                <p class="xp-org">York University</p>
-                <ul class="bullets">
-                  <li>U SPORTS (Gold, Silver) and OUA (Gold, Silver, Bronze) medalist</li>
-                  <li>Previously on the Canadian U18 National Team</li>
-                </ul>
-              </div>
-              <div class="cm-side">
-                <p class="xp-when">Sep 2024 – Present</p>
-                <div class="cm-pic"><img src="hockey-champions.webp" alt="York field hockey team, 2025 U SPORTS champions"></div>
-              </div>
-            </li>
             <li class="entry cm">
               <div class="cm-main">
                 <p class="xp-role">Vice President</p>
@@ -403,6 +408,24 @@
                 <div class="cm-pic"><span class="xp-ph">Photo</span></div>
               </div>
             </li>
+          </ul>
+          <h3 class="xp-group">Athletics and coaching</h3>
+          <ul class="entries xp-list">
+            <li class="entry cm">
+              <div class="cm-main">
+                <p class="xp-role">Varsity Field Hockey</p>
+                <p class="xp-org">York University</p>
+                <ul class="bullets">
+                  <li>U SPORTS (Gold, Silver) and OUA (Gold, Silver, Bronze) medalist</li>
+                  <li>Previously on the Canadian U18 National Team</li>
+                </ul>
+              </div>
+              <div class="cm-side">
+                <p class="xp-when">Sep 2024 – Present</p>
+                <div class="cm-pic"><img src="hockey-champions.webp" alt="York field hockey team, 2025 U SPORTS champions" loading="lazy"></div>
+              </div>
+            </li>
+            <!-- Coaching: HopOn first (strongest), then one-line entries -->
             <li class="entry cm">
               <div class="cm-main">
                 <p class="xp-role">HopOn North Vancouver</p>
@@ -415,7 +438,31 @@
                 <div class="cm-pic"><span class="xp-ph">Photo</span></div>
               </div>
             </li>
+            <li class="entry cm-line">
+              <p><span class="xp-role">Ski Racing Coach</span> <span class="xp-org">· Grouse Mountain Tyee Ski Club</span></p>
+              <p class="xp-when">Dec 2021 – Apr 2024</p>
+            </li>
+            <li class="entry cm-line">
+              <p><span class="xp-role">Mountain Bike Instructor</span> <span class="xp-org">· Endless Biking</span></p>
+              <!-- TODO: add Endless Biking dates here, e.g. <p class="xp-when">May 2022 – Sep 2023</p> -->
+            </li>
           </ul>
+          <!--
+            PHOTOS: put two photos in the images folder with exactly these names:
+              images/ski-racing.jpg and images/mountain-biking.jpg
+            Landscape, 1600 x 1200 px (4:3), under about 400 KB each.
+            Until they're uploaded, a grey "photo coming soon" box shows instead.
+          -->
+          <div class="photo-grid">
+            <figure class="grid-pic">
+              <div class="grid-frame"><span class="xp-ph">Ski racing photo coming soon</span><img src="images/ski-racing.jpg" alt="Tessa coaching young ski racers on a course at Grouse Mountain" width="1600" height="1200" loading="lazy" decoding="async"></div>
+              <figcaption>Ski racing · Grouse Mountain</figcaption>
+            </figure>
+            <figure class="grid-pic">
+              <div class="grid-frame"><span class="xp-ph">Mountain biking photo coming soon</span><img src="images/mountain-biking.jpg" alt="Tessa riding a forest mountain bike trail on the North Shore" width="1600" height="1200" loading="lazy" decoding="async"></div>
+              <figcaption>Mountain biking · North Shore</figcaption>
+            </figure>
+          </div>
         </div>
         </div>
         <div class="socials">
@@ -455,7 +502,7 @@
 
 
   // Hide sports photos that haven't been uploaded yet (instead of showing a broken image)
-  Array.prototype.forEach.call(document.querySelectorAll('.pics img'), function (img) {
+  Array.prototype.forEach.call(document.querySelectorAll('.pics img, .photo-grid img'), function (img) {
     function missing() { img.classList.add('missing'); }
     if (img.complete && !img.naturalWidth) missing(); else img.addEventListener('error', missing);
   });
