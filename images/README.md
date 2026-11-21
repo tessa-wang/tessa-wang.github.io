@@ -1,11 +1,7 @@
-# Photos for the Community tab
+# Photos used on the site
 
-Upload these two photos into this folder, with exactly these names:
+Still needed:
+- `hopon-riding.jpg`: HopOn riders on a forest trail (under the HopOn paragraph in "Where I started").
+  Until it's uploaded, a grey "coming soon" box shows in its place.
 
-- `ski-racing.jpg`: ski racing / coaching at Grouse Mountain
-- `mountain-biking.jpg`: mountain biking
-
-Size: landscape, 1600 x 1200 px (4:3), under about 400 KB each.
-Photos with a different shape still work; they're cropped to 4:3 from the centre.
-
-The `logo-*.webp` files are the company logos used in the Experience tab.
+Other photos in this folder are already used on the page (projects, community, story photos and company logos).
