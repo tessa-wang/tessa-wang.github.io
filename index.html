@@ -114,6 +114,8 @@
   .entry .meta { font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.75; display: flex; justify-content: space-between; gap: 16px; margin-bottom: 6px; }
   .entry p { margin-top: 6px; }
   .entry a { font-family: var(--mono); font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; }
+  .proj-shot { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; object-position: top; margin-top: 14px; border-radius: 6px; border: 1px solid rgba(31, 36, 32, 0.15); } /* project screenshots */
+  .entry a + p { margin-top: 1.1em; } /* a paragraph that follows a link */
   .entry p > a { font: inherit; text-transform: none; letter-spacing: normal; text-decoration: underline; text-underline-offset: 2px; } /* a link inside a sentence */
 
   /* ---------- Final card: soft light box with contact links ---------- */
@@ -200,6 +202,10 @@
   /* Photos show whole, at their own shape (no cropping) */
   .cm-pic { width: 220px; }
   .cm-pic img { display: block; width: 100%; height: auto; border-radius: 6px; }
+  /* Field hockey: dates on the right, two photos side by side under the text */
+  .entry.cm.cm-wide { grid-template-columns: 1fr auto; row-gap: 14px; }
+  .cm-wide > .photo-grid { grid-column: 1 / -1; margin: 0; }
+  .cm-wide .grid-frame { aspect-ratio: 3 / 2; }
   .cm-pic .xp-ph { width: 100%; height: auto; aspect-ratio: 4 / 3; }
   /* Community: one-line coaching entries (role · organization, dates on the right) */
   .entry.cm-line { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; padding: 16px 0; border-top: 1px solid rgba(31, 36, 32, 0.2); }
@@ -235,6 +241,7 @@
     .entry.cm { grid-template-columns: 1fr; gap: 12px; }
     .cm-side { align-items: stretch; }
     .cm-pic { width: 100%; }
+    .entry.cm.cm-wide { grid-template-columns: 1fr; }
   }
   /* Socials: a quieter row at the very bottom */
   .socials { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px 20px; margin-top: 36px; padding-top: 18px; border-top: 1px solid rgba(31, 36, 32, 0.25); font-family: var(--mono); font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; }
@@ -310,8 +317,8 @@
     <section class="section card" id="about" data-world="215">
       <div class="col">
         <h2 class="f">About me</h2>
-          <p class="f">I'm a Business Administration student at the Schulich School of Business at York University, specializing in Data Analytics and Finance, and I play on the Varsity Field Hockey Team.</p>
-          <p class="f">I grew up in Vancouver, where I took the photos on this site, and moved to Toronto for school and sport. I'm now looking to start my career on the business side of tech.</p>
+          <p class="f">I'm a Business Administration student (specializing in Data Analytics and Finance) at the Schulich School of Business at York University, and I play on the Varsity Field Hockey Team.</p>
+          <p class="f">I grew up in Vancouver, where I took the photos on this site, and moved to Toronto for school and sport. I have a career passion for working at the intersection of business and tech.</p>
       </div>
     </section>
 
@@ -334,8 +341,8 @@
         <div class="panel" id="panel-projects" role="tabpanel" aria-labelledby="tab-projects">
           <ul class="entries">
             <li class="entry"><p><b>Loan Review Agent:</b> Built an AI agent in Python for the Asset Management team at ACM Advisors. Designed to write loan performance commentary across a $5.5B AUM commercial real estate portfolio.</p></li>
-            <li class="entry"><p><b>The AI Money Web:</b> An interactive map of the money flowing between the companies building AI: chip deals, equity stakes, cloud contracts and debt.</p><div class="entry-links"><a href="https://tessa-wang.github.io/ai-debt/" target="_blank" rel="noopener">View project ↗</a></div></li>
-            <li class="entry"><p><b>Word of the Day:</b> An app for my friends, because I like asking people what one word describes their day. Everyone posts one word a day and sees each other's.</p><div class="entry-links"><a href="https://wotd-rho.vercel.app" target="_blank" rel="noopener">View project ↗</a></div></li>
+            <li class="entry"><p><b>The AI Money Web:</b> An interactive map of the money flowing between the companies building AI: chip deals, equity stakes, cloud contracts and debt.</p><img class="proj-shot" src="images/ai-money-web.webp" alt="The AI Money Web: a network diagram of deals between Nvidia, OpenAI, Anthropic and other AI companies" width="1200" height="1104" loading="lazy" decoding="async"><div class="entry-links"><a href="https://tessa-wang.github.io/ai-debt/" target="_blank" rel="noopener">View project ↗</a></div></li>
+            <li class="entry"><p><b>Word of the Day:</b> An app for my friends, because I like asking people what one word describes their day.</p><img class="proj-shot" src="images/word-of-the-day.webp" alt="Word of the Day app: a box to describe your day in one word, and today's words from friends" width="1000" height="1048" loading="lazy" decoding="async"><div class="entry-links"><a href="https://wotd-rho.vercel.app" target="_blank" rel="noopener">View project ↗</a></div></li>
           </ul>
         </div>
         <div class="panel" id="panel-experience" role="tabpanel" aria-labelledby="tab-experience" hidden>
@@ -369,12 +376,12 @@
         </div>
         <div class="panel" id="panel-research" role="tabpanel" aria-labelledby="tab-research" hidden>
           <ul class="entries">
-            <li class="entry"><p>I work with Professor Andrew Maxwell at York's Lassonde School of Engineering on research around technology, innovation, and commercialization, published through the <a href="https://substack.com/@innovationdoctor" target="_blank" rel="noopener">Innovation Doctor Substack</a>.</p><p>I'm also helping turn an Innovation &amp; Creativity course into an online format for an AI learning platform.</p><a href="https://substack.com/@innovationdoctor" target="_blank" rel="noopener">Innovation Doctor Substack ↗</a></li>
+            <li class="entry"><p>I work with Professor Andrew Maxwell at York's Lassonde School of Engineering on research around technology, innovation, and commercialization, published through the Innovation Doctor Substack.</p><a href="https://substack.com/@innovationdoctor" target="_blank" rel="noopener">Innovation Doctor Substack ↗</a><p>I'm also helping turn an Innovation &amp; Creativity course into an online format for StudyOrbit AI, an AI learning platform.</p><a href="https://studyorbit.ai/" target="_blank" rel="noopener">StudyOrbit AI ↗</a></li>
           </ul>
         </div>
         <div class="panel" id="panel-writing" role="tabpanel" aria-labelledby="tab-writing" hidden>
           <ul class="entries">
-            <li class="entry"><p>I enjoy writing about business, technology, psychology, and other topics.</p><a href="https://substack.com/@twang11" target="_blank" rel="noopener">Tessa's Substack ↗</a></li>
+            <li class="entry"><p>I enjoy writing about business, technology, psychology, and other topics that interest me.</p><a href="https://substack.com/@twang11" target="_blank" rel="noopener">Tessa's Substack ↗</a></li>
           </ul>
           <!-- ARTICLES: one block per article. Put the article's address in href="..." -->
           <p class="xp-group">Articles</p>
@@ -391,7 +398,7 @@
         </div>
         <div class="panel" id="panel-now" role="tabpanel" aria-labelledby="tab-now" hidden>
           <ul class="entries xp-list">
-            <li class="entry cm">
+            <li class="entry cm cm-wide">
               <div class="cm-main">
                 <p class="xp-role">Varsity Field Hockey</p>
                 <p class="xp-org">York University</p>
@@ -402,7 +409,10 @@
               </div>
               <div class="cm-side">
                 <p class="xp-when">Sep 2024 – Present</p>
-                <div class="cm-pic"><img src="hockey-champions.webp" alt="York field hockey team, 2025 U SPORTS champions" loading="lazy"></div>
+              </div>
+              <div class="photo-grid two">
+                <figure class="grid-pic"><div class="grid-frame"><img src="hockey-champions.webp" alt="York field hockey team, 2025 U SPORTS champions" width="600" height="314" loading="lazy" decoding="async"></div></figure>
+                <figure class="grid-pic"><div class="grid-frame"><img src="images/field-hockey-game.webp" alt="Tessa in a red York Lions jersey dribbling the ball past McMaster players" width="1000" height="666" loading="lazy" decoding="async"></div></figure>
               </div>
             </li>
             <li class="entry cm">
@@ -414,21 +424,33 @@
               </div>
               <div class="cm-side">
                 <p class="xp-when">Sep 2025 – Present</p>
-                <div class="cm-pic"><img src="images/bags-of-promise.webp" alt="Bags of Promise volunteers holding a hand-painted Jingle Bell Jog banner" loading="lazy"></div>
+                <div class="cm-pic"><img src="images/bags-of-promise.webp" alt="Bags of Promise volunteers holding a hand-painted Jingle Bell Jog banner" width="424" height="304" loading="lazy"></div>
               </div>
             </li>
             <li class="entry cm">
               <div class="cm-main">
-                <p class="xp-role">Internal Events Coordinator &amp; Mentor</p>
+                <p class="xp-role">Internal Events Coordinator</p>
                 <p class="xp-org">Sport Council at York University</p>
                 <ul class="bullets">
                   <li>Coordinate internal York and Varsity Athletics events for 450+ student-athletes</li>
-                  <li>Mentor first-year student-athletes through weekly meetings</li>
                 </ul>
               </div>
               <div class="cm-side">
                 <p class="xp-when">Mar 2025 – Present</p>
                 <div class="cm-pic"><img src="images/sport-council.webp" alt="York Sport Council members, student-athletes from several varsity teams" loading="lazy"></div>
+              </div>
+            </li>
+            <li class="entry cm">
+              <div class="cm-main">
+                <p class="xp-role">Student-Athlete Mentor</p>
+                <p class="xp-org">PAWS at York University</p>
+                <ul class="bullets">
+                  <li>Mentor first-year student-athletes through weekly meetings</li>
+                </ul>
+                <a href="https://yorkulions.ca/news/2018/4/26/general-learn-more-about-york-lions-services-paws.aspx" target="_blank" rel="noopener">More about PAWS ↗</a>
+              </div>
+              <div class="cm-side">
+                <p class="xp-when">Sep 2025 – Present</p>
               </div>
             </li>
           </ul>
@@ -437,37 +459,21 @@
           <!-- STORY + PHOTOS: each photo sits under its paragraph. Photos live in the images folder. -->
           <ul class="entries story">
             <li class="entry">
-              <p>I ski raced with the Grouse Mountain Tyee Ski Club for 10 years (2012 to 2022). Racing taught me a growth mindset, which changed how I approach goals. After racing, I coached the club’s U10 &amp; U12 athletes, then switched to freestyle in 2023, where I learned to backflip on skis!</p>
+              <p>Growing up, I ski raced with the Grouse Mountain Tyee Ski Club for 10 years. Racing introduced me to the concept of growth mindset, which has changed how I view opportunities and setbacks. After racing, I coached the club’s U10 &amp; U12 athletes, then switched to freestyle in 2023, where I learned to backflip on skis!</p>
               <div class="photo-grid one">
                 <figure class="grid-pic"><div class="grid-frame"><span class="xp-ph">Ski racing photo coming soon</span><img src="images/ski-racing.jpg" alt="Tessa carving around a red giant slalom gate in a ski race" width="1600" height="1200" loading="lazy" decoding="async"></div></figure>
               </div>
-              <p>I got into mountain biking during COVID, riding every day with friends on the mountain we lived at the base of. I did some downhill and enduro races and coached at Endless Biking, where I met my co-founder, Em. Together we started HopOn.</p>
+              <p>I got into mountain biking during COVID, riding every day with friends on the mountain we lived at the base of. I even competed in some downhill and enduro races.</p>
               <div class="photo-grid two">
                 <figure class="grid-pic"><div class="grid-frame"><span class="xp-ph">Mountain biking photo coming soon</span><img src="images/mountain-biking.jpg" alt="Tessa in a red helmet riding a mountain bike down a forest trail" width="1600" height="1200" loading="lazy" decoding="async"></div></figure>
-                <figure class="grid-pic"><div class="grid-frame"><span class="xp-ph">HopOn photo coming soon</span><img src="images/hopon.webp" alt="HopOn North Vancouver riders lined up with their mountain bikes at a trailhead" width="800" height="468" loading="lazy" decoding="async"></div></figure>
+                <figure class="grid-pic"><div class="grid-frame"><span class="xp-ph">Photo coming soon</span><img src="images/biking-friend.webp" alt="Tessa and a friend in full-face helmets with their bikes at a rainy Canadian Enduro Series race" width="1000" height="450" loading="lazy" decoding="async"></div></figure>
               </div>
-            </li>
-          </ul>
-          <ul class="entries xp-list">
-            <li class="entry cm-line">
-              <div class="cm-line-main">
-                <p><span class="xp-role">HopOn North Vancouver</span> <span class="xp-org">· with Cycling BC</span></p>
-                <p class="xp-desc">Co-launched a biking program for girls, focused on confidence, resilience, and teamwork.</p>
-                <div class="entry-links"><a href="https://hopon.cyclingbc.net/2023/10/31/hopon-north-van-recap-2023/" target="_blank" rel="noopener">Read the recap ↗</a></div>
+              <p>I started coaching at Endless Biking, where I met my co-founder, Em. Together we started HopOn, a biking program to encourage more girls to get into the sport.</p>
+              <div class="photo-grid two">
+                <figure class="grid-pic"><div class="grid-frame"><span class="xp-ph">HopOn photo coming soon</span><img src="images/hopon.webp" alt="HopOn riders lined up with their mountain bikes at a trailhead" width="800" height="468" loading="lazy" decoding="async"></div></figure>
+                <figure class="grid-pic"><div class="grid-frame"><span class="xp-ph">HopOn riding photo coming soon</span><img src="images/hopon-riding.jpg" alt="HopOn riders riding single file up a forest trail" width="800" height="600" loading="lazy" decoding="async"></div></figure>
               </div>
-              <p class="xp-when">2023 – 2024</p>
-            </li>
-            <li class="entry cm-line">
-              <div class="cm-line-main">
-                <p><span class="xp-role">Ski Racing Coach</span> <span class="xp-org">· Grouse Mountain Tyee Ski Club</span></p>
-              </div>
-              <p class="xp-when">2021 – 2024</p>
-            </li>
-            <li class="entry cm-line">
-              <div class="cm-line-main">
-                <p><span class="xp-role">Mountain Bike Instructor</span> <span class="xp-org">· Endless Biking</span></p>
-              </div>
-              <p class="xp-when">2021 – 2023</p>
+              <a href="https://hopon.cyclingbc.net/2023/10/31/hopon-north-van-recap-2023/" target="_blank" rel="noopener">More about HopOn ↗</a>
             </li>
           </ul>
         </div>
