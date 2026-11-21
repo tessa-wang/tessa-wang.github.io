@@ -202,6 +202,10 @@
   /* Photos show whole, at their own shape (no cropping) */
   .cm-pic { width: 220px; }
   .cm-pic img { display: block; width: 100%; height: auto; border-radius: 6px; }
+  /* Field hockey: dates on the right, two photos side by side under the text */
+  .entry.cm.cm-wide { grid-template-columns: 1fr auto; row-gap: 14px; }
+  .cm-wide > .photo-grid { grid-column: 1 / -1; margin: 0; }
+  .cm-wide .grid-frame { aspect-ratio: 3 / 2; }
   .cm-pic .xp-ph { width: 100%; height: auto; aspect-ratio: 4 / 3; }
   /* Community: one-line coaching entries (role · organization, dates on the right) */
   .entry.cm-line { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; padding: 16px 0; border-top: 1px solid rgba(31, 36, 32, 0.2); }
@@ -237,6 +241,7 @@
     .entry.cm { grid-template-columns: 1fr; gap: 12px; }
     .cm-side { align-items: stretch; }
     .cm-pic { width: 100%; }
+    .entry.cm.cm-wide { grid-template-columns: 1fr; }
   }
   /* Socials: a quieter row at the very bottom */
   .socials { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px 20px; margin-top: 36px; padding-top: 18px; border-top: 1px solid rgba(31, 36, 32, 0.25); font-family: var(--mono); font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; }
@@ -393,7 +398,7 @@
         </div>
         <div class="panel" id="panel-now" role="tabpanel" aria-labelledby="tab-now" hidden>
           <ul class="entries xp-list">
-            <li class="entry cm">
+            <li class="entry cm cm-wide">
               <div class="cm-main">
                 <p class="xp-role">Varsity Field Hockey</p>
                 <p class="xp-org">York University</p>
@@ -404,7 +409,10 @@
               </div>
               <div class="cm-side">
                 <p class="xp-when">Sep 2024 – Present</p>
-                <div class="cm-pic"><img src="hockey-champions.webp" alt="York field hockey team, 2025 U SPORTS champions" loading="lazy"></div>
+              </div>
+              <div class="photo-grid two">
+                <figure class="grid-pic"><div class="grid-frame"><img src="hockey-champions.webp" alt="York field hockey team, 2025 U SPORTS champions" width="600" height="314" loading="lazy" decoding="async"></div></figure>
+                <figure class="grid-pic"><div class="grid-frame"><img src="images/field-hockey-game.webp" alt="Tessa in a red York Lions jersey dribbling the ball past McMaster players" width="1000" height="666" loading="lazy" decoding="async"></div></figure>
               </div>
             </li>
             <li class="entry cm">
@@ -416,7 +424,7 @@
               </div>
               <div class="cm-side">
                 <p class="xp-when">Sep 2025 – Present</p>
-                <div class="cm-pic"><img src="images/bags-of-promise.webp" alt="Bags of Promise volunteers holding a hand-painted Jingle Bell Jog banner" loading="lazy"></div>
+                <div class="cm-pic"><img src="images/bags-of-promise.webp" alt="Bags of Promise volunteers holding a hand-painted Jingle Bell Jog banner" width="424" height="304" loading="lazy"></div>
               </div>
             </li>
             <li class="entry cm">
