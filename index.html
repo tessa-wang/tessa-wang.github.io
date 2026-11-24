@@ -20,7 +20,7 @@
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
-    background: #1d261c;
+    background: #b3aea2; /* matches the scenery; iPhone Safari uses this colour for its top/bottom bars */
     color: var(--ink);
     font-family: Inter, system-ui, sans-serif;
     font-size: 18px;
@@ -606,7 +606,8 @@
     // Only photos near the screen are drawn; near layers slide faster than the camera (parallax)
     layers.forEach(function (l) {
       var near = l._bottom > cam - vh && l._top < cam + vh * 2;
-      if (near !== l._near) { l.style.visibility = near ? '' : 'hidden'; l._near = near; }
+      // (phones keep every photo drawn: switching big photos on and off mid-scroll makes iPhones skip frames)
+      if (near !== l._near && !phone) { l.style.visibility = near ? '' : 'hidden'; l._near = near; }
       if (near && l._speed !== 1 && !reduceMotion && !phone) {
         l.style.transform = 'translate3d(0,' + (-(cam + vh / 2 - l._mid) * (l._speed - 1)).toFixed(1) + 'px,0)';
       }
@@ -615,14 +616,15 @@
     // Elevation counts down from the peak to the trailhead
     var t = worldMax > worldMin ? (cam - worldMin) / (worldMax - worldMin) : 0;
     var ft = (Math.round((TOP_FT - t * (TOP_FT - BOTTOM_FT)) / 10) * 10).toLocaleString();
-    if (ft !== lastFt) { elevN.textContent = ft; lastFt = ft; }
+    if (ft !== lastFt && !phone) { elevN.textContent = ft; lastFt = ft; }
     var hidden = innerWidth <= 720 && cam > worldMax - vh * 0.6; // on phones it would cover the last box
     if (hidden !== lastElevHidden) { elev.style.opacity = hidden ? 0 : 1; lastElevHidden = hidden; }
     var hud = cam > 2.9 * vh;
     if (hud !== lastHud) { document.body.classList.toggle('hud-light', hud); lastHud = hud; }
 
     // Focus: text is solid near the middle of the screen and fades toward the edges
-    if (!reduceMotion) {
+    // (computers only: recalculating every paragraph's fade on each frame makes iPhones skip frames)
+    if (!reduceMotion && !phone) {
       var mid = s + vh * 0.5;
       focus.forEach(function (f) {
         var dist = f.bottom < mid ? mid - f.bottom : f.top > mid ? f.top - mid : 0;
