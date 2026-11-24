@@ -31,7 +31,9 @@
   a { color: inherit; }
 
   /* ---------- The scenery: one tall "world" the camera descends through ---------- */
-  #scene { position: fixed; inset: 0; overflow: hidden; z-index: 0; }
+  /* pointer-events: none — the scenery is decoration only. It also lets iPhone Safari see the page "through" it,
+     so its bottom bar becomes see-through instead of a solid band. */
+  #scene { position: fixed; inset: 0; overflow: hidden; z-index: 0; pointer-events: none; }
   #world {
     position: absolute; left: 0; top: 0; width: 100%; height: 480vh; will-change: transform;
     background: linear-gradient(to bottom,
