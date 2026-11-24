@@ -189,10 +189,14 @@
   .entry .xp-desc { font-size: 15px; line-height: 1.55; color: #4c504c; margin-top: 10px; }
   .xp .bullets, .cm .bullets { font-size: 15px; color: #4c504c; margin-top: 10px; }
   .entry .xp-when { font-size: 15px; color: #6b6f6b; white-space: nowrap; margin-top: 2px; }
+  .xp-side { text-align: right; } /* Experience: dates with the city underneath */
+  .entry .xp-loc { font-size: 14px; color: #6b6f6b; margin-top: 2px; }
   @media (max-width: 720px) {
     .entry.xp { grid-template-columns: 48px 1fr; gap: 4px 14px; }
     .xp-logo, .xp-logo img, .xp-ph { width: 48px; height: 48px; }
     .entry .xp-when { grid-column: 2; grid-row: 1; justify-self: end; font-size: 13px; }
+    .xp-side { grid-column: 2; grid-row: 1; justify-self: end; }
+    .xp-side .xp-when, .entry .xp-loc { font-size: 13px; }
     .xp-main { grid-column: 1 / -1; }
   }
   /* Community rows: text on the left; dates and a photo on the right */
@@ -360,25 +364,34 @@
               <div class="xp-logo"><img src="images/logo-acm.webp" alt="ACM Advisors logo" loading="lazy"></div>
               <div class="xp-main">
                 <p class="xp-role">Real Estate Analyst</p>
-                <p class="xp-org">ACM Advisors Ltd. · Toronto</p>
+                <p class="xp-org">ACM Advisors Ltd.</p>
               </div>
-              <p class="xp-when">May – Aug 2026</p>
+              <div class="xp-side">
+                <p class="xp-when">May – Aug 2026</p>
+                <p class="xp-loc">Toronto</p>
+              </div>
             </li>
             <li class="entry xp">
               <div class="xp-logo"><img src="images/logo-freedom-marine.webp" alt="Freedom Marine logo" loading="lazy"></div>
               <div class="xp-main">
                 <p class="xp-role">Sales and Marketing Support Intern</p>
-                <p class="xp-org">Freedom Marine International Yacht Sales · Vancouver</p>
+                <p class="xp-org">Freedom Marine International Yacht Sales</p>
               </div>
-              <p class="xp-when">May – Aug 2025</p>
+              <div class="xp-side">
+                <p class="xp-when">May – Aug 2025</p>
+                <p class="xp-loc">Vancouver</p>
+              </div>
             </li>
             <li class="entry xp">
               <div class="xp-logo"><img src="images/logo-loud-crow.webp" alt="Loud Crow Interactive logo" loading="lazy"></div>
               <div class="xp-main">
                 <p class="xp-role">Royalty Accounting Assistant</p>
-                <p class="xp-org">Loud Crow Interactive · Vancouver</p>
+                <p class="xp-org">Loud Crow Interactive</p>
               </div>
-              <p class="xp-when">Jun 2018 – Jun 2024</p>
+              <div class="xp-side">
+                <p class="xp-when">Jun 2018 – Jun 2024</p>
+                <p class="xp-loc">Vancouver</p>
+              </div>
             </li>
           </ul>
         </div>
