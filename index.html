@@ -55,14 +55,6 @@
   }
 
   /* ---------- Fixed UI ---------- */
-  #loader {
-    position: fixed; inset: 0; z-index: 50; display: grid; place-items: center;
-    background: #6f88a3; color: var(--cream);
-    font-family: var(--mono); font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase;
-    transition: opacity 1s var(--ease), visibility 1s;
-  }
-  body.loaded #loader { opacity: 0; visibility: hidden; }
-  body.loader-gone #loader { display: none; } /* fully removed after fading, so phones don't tint their top/bottom bars with its blue */
 
   .hud { position: fixed; z-index: 10; font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink); transition: color 0.6s; }
   body.hud-light .hud { color: var(--cream); }
@@ -276,8 +268,6 @@
 </style>
 </head>
 <body>
-  <div id="loader">Ascending to 7,160 ft…</div>
-  <script>setTimeout(function () { document.body.classList.add('loaded'); setTimeout(function () { document.body.classList.add('loader-gone'); }, 1100); }, 5000);</script>
 
   <!--
     SWAPPING PHOTOS: replace a photo with a new one of the same name and refresh.
@@ -653,7 +643,6 @@
   });
   function start() {
     layout(); measureText(); update();
-    setTimeout(function () { document.body.classList.add('loaded'); setTimeout(function () { document.body.classList.add('loader-gone'); }, 1100); }, 400);
   }
   if (document.readyState === 'complete') start(); else addEventListener('load', start);
   if (document.fonts) document.fonts.ready.then(function () { layout(); measureText(); requestUpdate(); });
