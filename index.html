@@ -31,9 +31,7 @@
   a { color: inherit; }
 
   /* ---------- The scenery: one tall "world" the camera descends through ---------- */
-  /* pointer-events: none — the scenery is decoration only. It also lets iPhone Safari see the page "through" it,
-     so its bottom bar becomes see-through instead of a solid band. */
-  #scene { position: fixed; inset: 0; overflow: hidden; z-index: 0; pointer-events: none; }
+  #scene { position: fixed; inset: 0; overflow: hidden; z-index: 0; }
   #world {
     position: absolute; left: 0; top: 0; width: 100%; height: 480vh; will-change: transform;
     background: linear-gradient(to bottom,
@@ -608,8 +606,7 @@
     // Only photos near the screen are drawn; near layers slide faster than the camera (parallax)
     layers.forEach(function (l) {
       var near = l._bottom > cam - vh && l._top < cam + vh * 2;
-      // (phones keep every photo drawn: switching big photos on and off mid-scroll makes iPhones skip frames)
-      if (near !== l._near && !phone) { l.style.visibility = near ? '' : 'hidden'; l._near = near; }
+      if (near !== l._near) { l.style.visibility = near ? '' : 'hidden'; l._near = near; }
       if (near && l._speed !== 1 && !reduceMotion && !phone) {
         l.style.transform = 'translate3d(0,' + (-(cam + vh / 2 - l._mid) * (l._speed - 1)).toFixed(1) + 'px,0)';
       }
