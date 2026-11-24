@@ -48,6 +48,7 @@
 
   /* Halftone print texture over the scenery */
   #halftone {
+    transform: translateZ(0); /* keep the dot texture on its own layer so it isn't redrawn while scrolling */
     position: fixed; inset: 0; z-index: 1; pointer-events: none;
     background-image: radial-gradient(rgba(25, 20, 10, 0.5) 0.8px, transparent 1.3px);
     background-size: 4px 4px;
@@ -510,6 +511,9 @@
   var TOP_FT = 7160, BOTTOM_FT = 600;
   var START_VH = 95; // where the camera starts in the scenery (vh from the top): just above the peaks
   var reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Phones: skip the per-layer parallax (each photo sliding at its own speed). The scenery still descends,
+  // but as one piece, which scrolls much more smoothly on iPhone.
+  var phone = matchMedia('(max-width: 720px), (pointer: coarse)').matches;
   var world = document.getElementById('world');
   var layers = Array.prototype.slice.call(world.querySelectorAll('.layer'));
   layers.forEach(function (l) { l._speed = parseFloat(l.dataset.speed || 1); });
@@ -580,7 +584,7 @@
   var lastFt = '', lastElevHidden = null, lastHud = null;
   var elev = document.getElementById('elev');
   var parallax = layers.filter(function (l) { return l._speed !== 1; });
-  parallax.forEach(function (l) { l.style.willChange = 'transform'; });
+  if (!phone) parallax.forEach(function (l) { l.style.willChange = 'transform'; });
 
   // Text positions are measured once (in measureText), not while scrolling
   var focus = [];
@@ -603,7 +607,7 @@
     layers.forEach(function (l) {
       var near = l._bottom > cam - vh && l._top < cam + vh * 2;
       if (near !== l._near) { l.style.visibility = near ? '' : 'hidden'; l._near = near; }
-      if (near && l._speed !== 1 && !reduceMotion) {
+      if (near && l._speed !== 1 && !reduceMotion && !phone) {
         l.style.transform = 'translate3d(0,' + (-(cam + vh / 2 - l._mid) * (l._speed - 1)).toFixed(1) + 'px,0)';
       }
     });
