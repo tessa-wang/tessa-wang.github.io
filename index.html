@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Tessa Wang</title>
 <meta name="description" content="Tessa: from the peaks to the trailhead.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -62,11 +62,12 @@
     transition: opacity 1s var(--ease), visibility 1s;
   }
   body.loaded #loader { opacity: 0; visibility: hidden; }
+  body.loader-gone #loader { display: none; } /* fully removed after fading, so phones don't tint their top/bottom bars with its blue */
 
   .hud { position: fixed; z-index: 10; font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink); transition: color 0.6s; }
   body.hud-light .hud { color: var(--cream); }
   #links {
-    top: 20px; left: clamp(16px, 3vw, 36px); display: flex; gap: 10px;
+    top: max(20px, calc(env(safe-area-inset-top) + 10px)); left: clamp(16px, 3vw, 36px); display: flex; gap: 10px;
     background: rgba(244, 241, 232, 0.78); padding: 8px 14px; border-radius: 8px;
   }
   body.hud-light #links { color: var(--ink); } /* stay dark on the light box */
@@ -265,8 +266,7 @@
 
   @media (max-width: 720px) {
     body { font-size: 17px; }
-    #elev { top: auto; bottom: 20px; transform: none; }
-    #elev .label { display: none; }
+    #elev { display: none; } /* no elevation box on phones */
     .section { padding: 18vh 22px; }
     footer { padding-bottom: 56px; }
   }
@@ -277,7 +277,7 @@
 </head>
 <body>
   <div id="loader">Ascending to 7,160 ft…</div>
-  <script>setTimeout(function () { document.body.classList.add('loaded'); }, 5000);</script>
+  <script>setTimeout(function () { document.body.classList.add('loaded'); setTimeout(function () { document.body.classList.add('loader-gone'); }, 1100); }, 5000);</script>
 
   <!--
     SWAPPING PHOTOS: replace a photo with a new one of the same name and refresh.
@@ -653,7 +653,7 @@
   });
   function start() {
     layout(); measureText(); update();
-    setTimeout(function () { document.body.classList.add('loaded'); }, 400);
+    setTimeout(function () { document.body.classList.add('loaded'); setTimeout(function () { document.body.classList.add('loader-gone'); }, 1100); }, 400);
   }
   if (document.readyState === 'complete') start(); else addEventListener('load', start);
   if (document.fonts) document.fonts.ready.then(function () { layout(); measureText(); requestUpdate(); });
