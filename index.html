@@ -124,17 +124,17 @@
   .hero h1 { letter-spacing: -0.045em; }
   .portrait { object-fit: cover; border-radius: 6px; box-shadow: 0 10px 24px -12px rgba(0, 0, 0, 0.45); }
   /* Computers: name across the top; the photo sits beside the welcome blurb, its top level with the blurb's
-     first line, running a little below "Read more" */
+     first line and its bottom level with "Read more" */
   .hero { display: grid; grid-template-columns: 1fr 210px; gap: 32px; }
   .hero-text { display: contents; }
   .hero h1 { grid-column: 1 / -1; }
   .hero .lede { grid-column: 1; grid-row: 2; }
   .hero .hint { grid-column: 1; grid-row: 3; }
-  .portrait { grid-column: 2; grid-row: 2 / 4; width: 100%; height: 100%; margin-top: 31px; contain: size; object-position: 50% 35%; }
+  .portrait { grid-column: 2; grid-row: 2 / 4; align-self: stretch; width: 100%; height: auto; margin-top: 31px; contain: size; }
   /* Phones: one column, wide photo on top */
   @media (max-width: 720px) {
     .hero { grid-template-columns: 1fr; gap: 0; }
-    .portrait { grid-row: 1; grid-column: 1; height: auto; aspect-ratio: 4 / 3; margin-top: 0; contain: none; }
+    .portrait { grid-row: 1; grid-column: 1; height: auto; aspect-ratio: 4 / 3; margin-top: 0; contain: none; object-position: 50% 15%; }
     .hero h1 { grid-row: 2; margin-top: 20px; }
     .hero .lede { grid-row: 3; }
     .hero .hint { grid-row: 4; }
@@ -327,7 +327,7 @@
           <p class="lede f">Welcome to my personal website. This is where I post my projects, research, writing, and anything else on my mind.</p>
           <p class="hint f">read more ↓</p>
         </div>
-        <img class="portrait f" src="images/portrait-2.webp" alt="Portrait of Tessa">
+        <img class="portrait f" src="images/portrait-3.webp" alt="Portrait of Tessa">
       </div>
     </section>
 
