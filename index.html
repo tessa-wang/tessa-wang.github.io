@@ -119,14 +119,25 @@
   .card .col { background: rgba(244, 241, 232, 0.78); padding: 36px 40px; border-radius: 8px; text-shadow: none; }
   @media (max-width: 720px) { .card .col { padding: 24px 20px; } }
   /* First box: name + photo side by side (photo on top on phones) */
-  .hero { display: flex; align-items: center; gap: 32px; }
   .hero-text { flex: 1; min-width: 0; }
   .hero h1 { font-size: clamp(48px, 6vw, 72px); }
   .hero h1 { letter-spacing: -0.045em; }
-  .portrait { width: 150px; aspect-ratio: 480 / 505; object-fit: cover; border-radius: 6px; flex-shrink: 0; box-shadow: 0 10px 24px -12px rgba(0, 0, 0, 0.45); }
+  .portrait { object-fit: cover; border-radius: 6px; box-shadow: 0 10px 24px -12px rgba(0, 0, 0, 0.45); }
+  /* Computers: name across the top; the photo sits beside the welcome blurb, its top level with the blurb's
+     first line, running a little below "Read more" */
+  .hero { display: grid; grid-template-columns: 1fr 210px; gap: 32px; }
+  .hero-text { display: contents; }
+  .hero h1 { grid-column: 1 / -1; }
+  .hero .lede { grid-column: 1; grid-row: 2; }
+  .hero .hint { grid-column: 1; grid-row: 3; }
+  .portrait { grid-column: 2; grid-row: 2 / 4; width: 100%; height: 100%; margin-top: 31px; contain: size; object-position: 50% 35%; }
+  /* Phones: one column, wide photo on top */
   @media (max-width: 720px) {
-    .hero { flex-direction: column-reverse; align-items: flex-start; gap: 20px; }
-    .portrait { width: 110px; }
+    .hero { grid-template-columns: 1fr; gap: 0; }
+    .portrait { grid-row: 1; grid-column: 1; height: auto; aspect-ratio: 4 / 3; margin-top: 0; contain: none; }
+    .hero h1 { grid-row: 2; margin-top: 20px; }
+    .hero .lede { grid-row: 3; }
+    .hero .hint { grid-row: 4; }
   }
   .end { padding-bottom: 10vh; }
   /* About and Life sit close under the first box instead of a full screen apart */
@@ -316,7 +327,7 @@
           <p class="lede f">Welcome to my personal website. This is where I post my projects, research, writing, and anything else on my mind.</p>
           <p class="hint f">read more ↓</p>
         </div>
-        <img class="portrait f" src="images/portrait.webp" alt="Portrait of Tessa">
+        <img class="portrait f" src="images/portrait-2.webp" alt="Portrait of Tessa">
       </div>
     </section>
 
